@@ -11,30 +11,30 @@ import java.io.Serializable;
 @Entity
 public class Item implements Serializable{
 	
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
 	@Column(nullable = false)
 	private String name;
 	
 	@Column(nullable = false, updatable = false)
-	private String desc;
+	private String description;
 	
 	public Item() {
 	
 	}
 	
-	public Item(String id, String name, String desc) {
+	public Item(long id, String name, String desc) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.desc = desc;
+		this.description = desc;
 	}
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -44,9 +44,9 @@ public class Item implements Serializable{
 		this.name = name;
 	}
 	public String getDesc() {
-		return desc;
+		return description;
 	}
 	public void setDesc(String desc) {
-		this.desc = desc;
+		this.description = desc;
 	}
 }

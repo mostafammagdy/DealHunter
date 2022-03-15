@@ -25,7 +25,7 @@ public class ItemController {
 	}
 	
 	@RequestMapping("/items/{id}")
-	public Item getItem(@PathVariable String id) {
+	public Item getItem(@PathVariable long id) {
 		return itemService.getItem(id);
 	}
 	//for POST you need to specify method
@@ -35,12 +35,12 @@ public class ItemController {
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/items/{id}")
-	public void updateItem(@RequestBody Item item,@PathVariable String id) {
+	public void updateItem(@RequestBody Item item,@PathVariable long id) {
 		itemService.updateItem(id,item);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/items/{id}")
-	public void deleteItem(@PathVariable String id) {
+	public void deleteItem(@PathVariable long id) {
 		itemService.deleteItem(id);
 	}
 }
