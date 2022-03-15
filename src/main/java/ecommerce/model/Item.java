@@ -1,9 +1,24 @@
-package ecommerce;
+package ecommerce.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-public class Item {
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+
+@Entity
+public class Item implements Serializable{
 	
+	 @Id
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
+	
+	@Column(nullable = false)
 	private String name;
+	
+	@Column(nullable = false, updatable = false)
 	private String desc;
 	
 	public Item() {

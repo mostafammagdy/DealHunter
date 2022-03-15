@@ -1,10 +1,12 @@
-package ecommerce;
+package ecommerce.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import ecommerce.model.Item;
 
 //Spring business service
 @Service
