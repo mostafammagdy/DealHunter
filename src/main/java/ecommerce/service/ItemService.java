@@ -1,50 +1,67 @@
 package ecommerce.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ecommerce.model.Item;
+import ecommerce.repository.ItemRepository;
 
 //Spring business service
 @Service
 public class ItemService {
 
-	private List<Item> items = new ArrayList<>(Arrays.asList(
-			new Item(0, "Framework", "desc1"),
-			new Item(1, "Core", "desc1"),
-			new Item(2, "Framework", "desc1")
-			));
+	@Autowired
+	private ItemRepository items;
+	/**
+	 * Get all Items from db
+	 * @return
+	 */
 	public List<Item> getAllItems(){
-		return items;
+		return items.findAll();
 	}
 	
+	/**
+	 * Get an Item with matching id, or throws 
+	 * @param id
+	 * @return
+	 */
 	public Item getItem(long id) {
-		//itterate and match id (elegant way)
-		return items.stream().filter(t -> t.getId() == id).findFirst().get();
+		return items.findById(id).get();
 	}
 
+	/**
+	 * Adds a new Item to db
+	 * if id was used previously, a new id is automatically used instead.
+	 * @param item
+	 * @return
+	 */
 	public void addItem(Item item) {
-		// TODO Auto-generated method stub
-		items.add(item);
+		if (!items.existsById(item.getId()))
+			items.saveAndFlush(item);
+
 	}
 
+	/**
+	 * Adds a new Item to db, or update existing one with matching id
+	 * @param id
+	 * @param item
+	 */
 	public void updateItem(long id, Item item) {
-		// TODO Auto-generated method stub
-		for(int i = 0; i < items.size(); i++) {
-			Item p = items.get(i);
-			if (p.getId() ==id) {
-				items.set(i, item);
-				return;
-			}
-		}
+		item.setId(id);
+		items.save(item);
+
+
 	}
 
+	/**
+	 * Deletes Item with matching id from db
+	 * @param id
+	 */
 	public void deleteItem(long id) {
-		
-		// TODO Auto-generated method stub
-		items.removeIf(t -> t.getId() == id);
+		if (items.existsById(id)) {
+			items.deleteById(id);
+		}
 	}
 }
