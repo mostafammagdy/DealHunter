@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export default function Item() {
   const [items, setItems] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/items")
+    fetch("/items")
       .then((res) => res.json())
       .then((result) => {
         setItems(result);

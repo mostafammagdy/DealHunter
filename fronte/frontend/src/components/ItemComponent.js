@@ -11,7 +11,7 @@ class ItemComponent extends React.Component {
 
   componentDidMount() {
     console.log("component did mount");
-    fetch("http://localhost:8080/items", {
+    fetch("/items", {
       crossDomain: true,
       method: "GET",
     })
