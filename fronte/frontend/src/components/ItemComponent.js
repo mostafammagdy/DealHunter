@@ -34,14 +34,19 @@ class ItemComponent extends React.Component {
         </div>
       );
     return (
-      <div className="ItemComponent">
-        <h1> here are all the items</h1>
+      <div className="item-container">
+        <h1> featured items </h1>
         {items.map((item) => (
-          <ol key={item.id}>
-            Item_Bvrand: {item.brand}, Item_desc: {item.description}, Item_Name:{" "}
-            {item.name},f Item_Price: {item.price}, Item_Quantity:{" "}
-            {item.quantity}, Item_Type: {item.type}
-          </ol>
+          <div className="card">
+            <img
+              src="https://m.media-amazon.com/images/I/21DejQuoT2L.jpg"
+              alt=""
+            />
+            <h3>{item.brand}</h3>
+            <p>{item.description}</p>
+            <h3>{item.name}</h3>$$:{item.price}, Item_Quantity: {item.quantity}
+            <h3>{item.type}</h3>
+          </div>
         ))}
       </div>
     );
