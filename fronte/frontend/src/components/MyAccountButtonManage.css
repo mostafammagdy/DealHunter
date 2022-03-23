@@ -1,0 +1,60 @@
+body{
+    min-width: 800px;
+}
+.row{
+    margin-top: 75px !important;
+}
+
+.Box{
+
+height:7rem;
+width: 15rem !important;
+color:black;
+border: 1px;
+border-color: gray;
+border-radius: 10px;
+border-style: solid;
+/* position:absolute;
+left:20%;
+top:80%; */
+margin-right: 10px;
+
+
+
+}
+.Box:hover{
+    background:lightcoral;
+    cursor: pointer;
+}
+
+.innerBox{
+  display:inline;
+    height:7em;
+    width: 13em !important;
+padding: 10px;
+
+/* padding-left:70px; */
+
+
+}
+.innerBox h1.boxHeader{
+    font-size:15px;
+    padding-left:70px;
+    position:relative;
+    top:-30%;
+}
+.innerBox p{
+    font-size:14px;
+    padding-left:70px;
+    position:relative;
+    top:-30%;
+}
+.innerBox img {
+border-radius: 50%;
+width:30%;
+height:50%;
+position:relative;
+top:30%;
+left:-5%;
+
+}
