@@ -15,6 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import DrawerComponent from './Drawer';
 import {Link} from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,6 +65,7 @@ const Appbar = () => {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [openDrawer,setOpenDrawer] = React.useState(false);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,6 +90,8 @@ const Appbar = () => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -166,6 +170,9 @@ const Appbar = () => {
   );
 
   return (
+    <div>
+    <DrawerComponent openDrawer = {openDrawer} setOpenDrawer = {setOpenDrawer}/>
+
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -175,6 +182,7 @@ const Appbar = () => {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={() => setOpenDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
@@ -240,6 +248,7 @@ const Appbar = () => {
       {renderMobileMenu}
       {renderMenu}
     </Box>
+    </div>
   );
   
 }
