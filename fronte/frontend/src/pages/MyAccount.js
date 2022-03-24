@@ -1,9 +1,9 @@
 import React from 'react'
-import MyAccountButttonManage from './MyAccountButttonManage'
-import searching from './searching.jpg'
-import accountIcon from './AccountIcon2.jpg'
-import review from './review.jpg'
-import checkout from './checkout.jpg'
+import MyAccountButttonManage from '../components/MyAccountButttonManage'
+import searching from '../assets/searching.jpg'
+import accountIcon from '../assets/AccountIcon2.jpg'
+import review from '../assets/review.jpg'
+import checkout from '../assets/checkout.jpg'
 
 export default function MyAccount() {
 

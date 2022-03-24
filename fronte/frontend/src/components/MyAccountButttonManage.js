@@ -1,5 +1,5 @@
 import React from 'react'
-import './MyAccountButtonManage.css';
+import '../styles/MyAccountButtonManage.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
