@@ -9,7 +9,6 @@ function App() {
     <div className="App">
       This is our app.
       <AppBar />
-      <ItemComponent />
     </div>
   );
 }
