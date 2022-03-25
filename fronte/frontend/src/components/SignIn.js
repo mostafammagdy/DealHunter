@@ -6,36 +6,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { makeStyles } from '@material-ui/core';
-import '../styles/SignUp.css';
-
-
-const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: theme.spacing(2),
-  
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '300px',
-      },
-      '& .MuiButtonBase-root': {
-        margin: theme.spacing(2),
-      },
-    },
-  }));
-
+import '../styles/SignForm.css';
 
 
 
 export default function SignUp(props) {
-  
-  //const [open, setOpen] = React.useState(false);
-
-  //const classes = useStyles();
+ 
   const handleClickOpen = () => {
     props.setOpenBox(true);
   };
@@ -48,17 +27,14 @@ export default function SignUp(props) {
   const [password, setPassword] = React.useState('');
   
 
- 
-  
-
 
   return (
     <div>
      
       <Dialog open={props.openBox} onClose={props.setOpenBox}>
         <DialogTitle>Sign In</DialogTitle>
-        <form className="signUpForm" >
-    
+        <form className="signForm" >
+     
       <TextField
         label="Email"
         variant="filled"
@@ -66,6 +42,7 @@ export default function SignUp(props) {
         required
         value={email}
         onChange={e => setEmail(e.target.value)}
+        margin="normal"
       />
       <TextField
         label="Password"
@@ -74,37 +51,16 @@ export default function SignUp(props) {
         required
         value={password}
         onChange={e => setPassword(e.target.value)}
+        margin="normal"
       />
-      <div className ="button">
+      <Stack spacing={2} direction="row" style={{marginTop:"20px"}}>
         <Button variant="contained" onClick={handleClose}>
           Cancel
         </Button>
-        <Button type="submit" variant="contained" color="primary" >
+        <Button type="submit" variant="contained" color="primary" style={{marginlLeft:"5px"}} >
           Sign In
         </Button>
-      </div>
-    
-
-
-        {/* <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent> */}
-        {/* <DialogActions >
-          <Button onClick={handleClose} className ="button">Cancel</Button>
-          <Button onClick={handleClose} className ="button">Sign Up</Button>
-        </DialogActions> */}
+      </Stack>
         </form>
       </Dialog>
     </div>
