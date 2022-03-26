@@ -39,8 +39,18 @@ class ItemComponent extends React.Component {
 
     return (
       <div className="item-container">
-        <h1> featured items </h1>
-        <h1>{this.props.inputText}</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
+          <h1> featured items </h1>
+
+          <br />
+        </div>
         {items
           .filter((val) => {
             if (this.props.inputText == "") {
