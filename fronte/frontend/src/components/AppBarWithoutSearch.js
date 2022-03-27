@@ -61,14 +61,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
- function Appbar() {
+ function AppBarWithoutSearch() {
   const [inputText, setInputText] = useState("");
 
-  let inputHandler = (e) => {
-    //convert input text to lower case
-    var lowerCase = e.target.value.toLowerCase();
-    setInputText(lowerCase);
-  };
+ 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -209,12 +205,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              onChange={inputHandler}
+            
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <h1>{inputText}</h1>
+         
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -262,7 +258,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
           </Box>
         </Toolbar>
       </AppBar>
-      <ItemComponent inputText={inputText} />
+ 
       {renderMobileMenu}
       {renderMenu}
     </Box>
@@ -272,4 +268,4 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   );
   
 }
-export default Appbar;
+export default AppBarWithoutSearch;

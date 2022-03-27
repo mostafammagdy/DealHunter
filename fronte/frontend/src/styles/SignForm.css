@@ -1,0 +1,9 @@
+.signForm{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 2px;
+width:300px;
+
+}

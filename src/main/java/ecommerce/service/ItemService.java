@@ -1,5 +1,6 @@
 package ecommerce.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,25 @@ public class ItemService {
 	@Autowired
 	private ItemRepository items;
 	/**
-	 * Get all Items from db
+	 * Get all Items from db.<br>
+	 * Obsolete in favor of 
+	 * {@link ItemService#getAllItemsFiltered(String, String)}
 	 * @return
 	 */
 	public List<Item> getAllItems(){
 		return items.findAll();
+	}
+	
+	/**
+	 * Get all Items from db.
+	 * If brand or type params were provided, filter non-matching rows.
+	 * Otherwise ignored if null.
+	 * @param brand
+	 * @param type
+	 * @return
+	 */
+	public List<Item> getAllItemsFiltered(String brand, String type) {
+		return items.findAllFiltered(brand, type);
 	}
 	
 	/**
@@ -40,7 +55,6 @@ public class ItemService {
 	public void addItem(Item item) {
 		if (!items.existsById(item.getId()))
 			items.saveAndFlush(item);
-
 	}
 
 	/**
@@ -51,8 +65,6 @@ public class ItemService {
 	public void updateItem(long id, Item item) {
 		item.setId(id);
 		items.save(item);
-
-
 	}
 
 	/**
@@ -64,4 +76,26 @@ public class ItemService {
 			items.deleteById(id);
 		}
 	}
+	
+	/**
+	 * Gets an ordered list of all brands
+	 * @return
+	 */
+	public List<String> getBrands() {
+		List<String> brands = new ArrayList<String>();
+		brands.addAll(items.findAllBrands());
+		return brands;
+	}
+	
+	/**
+	 * Gets an ordered list of all types 
+	 * @return
+	 */
+	public List<String> getTypes() {
+		List<String> types = new ArrayList<String>();
+		types.addAll(items.findAllTypes());
+		return types;
+	}
+
+
 }
