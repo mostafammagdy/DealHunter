@@ -58,7 +58,7 @@ class ItemComponent extends React.Component {
             } else if (
               val.name
                 .toLowerCase()
-                .includes(this.props.inputText.toLowerCase())
+                .includes(this.props.inputText)
             ) {
               return val;
             }
