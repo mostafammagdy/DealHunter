@@ -38,7 +38,7 @@ public class AuthenticationService {
         return null;
     }
 
-    // check if the token is valid
+    // check if the token is validnyes
     public void authenticate(String token) throws AuthenticationFailException {
         if (!Objects.nonNull(token)) {
             throw new AuthenticationFailException(MessageStrings.AUTH_TOEKN_NOT_PRESENT);
