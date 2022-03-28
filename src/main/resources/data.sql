@@ -8,9 +8,7 @@ values
 	(291, "orange", "an orange", "Fruits", "SmallInc", 1500, 4),
 	(481, "watermelon", "a watermelon", "Fruits", "SmallInc", 1500, 6);
 	
-	
-	ALTER LOGIN ecommerce
-WITH PASSWORD = '4413'
+
 
 insert into item (id, name, description, type, brand, price, quantity)
 values
