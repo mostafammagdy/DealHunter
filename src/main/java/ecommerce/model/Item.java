@@ -1,10 +1,9 @@
 package ecommerce.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.ColumnDefault;
+
 import java.io.Serializable;
 
 
@@ -34,12 +33,15 @@ public class Item implements Serializable{
 	@Column(nullable = false)
 	private int price;
 	
-
+	@ColumnDefault("'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'")
+	private String image;
+	
 	public Item() {
 		
 	}
-	
-	public Item(long id, String name, String description, String type, String brand, int quantity, int price) {
+
+	public Item(long id, String name, String description, String type, String brand, int quantity, int price,
+			String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,6 +50,7 @@ public class Item implements Serializable{
 		this.brand = brand;
 		this.quantity = quantity;
 		this.price = price;
+		this.image = image;
 	}
 
 	
@@ -100,5 +103,13 @@ public class Item implements Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }
