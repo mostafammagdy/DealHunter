@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import ShippingAddress from './ShippingAddress'
 import PaymentForm from "./PaymentForm";
 import Review from "./ReviewForm";
-import '../styles/Checkout.css'
+
 
 
 const styles = theme => ({
