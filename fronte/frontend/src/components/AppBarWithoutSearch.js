@@ -180,7 +180,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     
 
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" style={{background:"#1976d2"}} >
         <Toolbar>
           <IconButton
             size="large"
