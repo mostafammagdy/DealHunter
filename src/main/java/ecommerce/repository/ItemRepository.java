@@ -18,8 +18,11 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	@Query(value = "select distinct type from item order by type", nativeQuery = true)
 	List<String> findAllTypes();
 
-	@Query(value = "select * from item where (:brand is null or brand = :brand) and"
-			+ " (:type is null or type = :type)", nativeQuery = true)
-	List<Item> findAllFiltered(String brand, String type);
+	@Query(value = "select * from item where "
+			+ "(:brand is null or brand = :brand) and  "
+			+ "(:type is null or type = :type) and "
+			+ "(:query is null or LOWER(name) LIKE :query or "
+			+ "LOWER(description) LIKE :query)", nativeQuery = true)
+	List<Item> findAllFiltered(String brand, String type, String query);
 	
 }

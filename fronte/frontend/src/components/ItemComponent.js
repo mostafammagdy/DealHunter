@@ -66,7 +66,7 @@ class ItemComponent extends React.Component {
           .map((item) => (
             <div className="card">
               <img
-                src="https://m.media-amazon.com/images/I/21DejQuoT2L.jpg"
+                src={item.image}
                 alt=""
               />
               <h3>{item.brand}</h3>

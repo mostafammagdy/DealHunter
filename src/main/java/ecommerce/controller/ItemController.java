@@ -25,9 +25,10 @@ public class ItemController {
 	@GetMapping()
 	public List<Item> getAll(
 			@RequestParam(name = "brand", required = false) String brand,
-			@RequestParam(name = "type", required = false) String type			
+			@RequestParam(name = "type", required = false) String type,
+			@RequestParam(name = "query", required = false) String query
 			) {
-		return itemService.getAllItemsFiltered(brand, type);
+		return itemService.getAllItemsFiltered(brand, type, query);
 	}
 	
 	@GetMapping("/brands")

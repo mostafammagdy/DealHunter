@@ -27,14 +27,24 @@ public class ItemService {
 	
 	/**
 	 * Get all Items from db.
-	 * If brand or type params were provided, filter non-matching rows.
+	 * If brand,type, or query params were provided, filter non-matching rows.
 	 * Otherwise ignored if null.
 	 * @param brand
 	 * @param type
+	 * @param query 
 	 * @return
 	 */
-	public List<Item> getAllItemsFiltered(String brand, String type) {
-		return items.findAllFiltered(brand, type);
+	public List<Item> getAllItemsFiltered(String brand, String type, String query) {
+		
+		if (query == null){
+			return items.findAllFiltered(brand, type, query);
+		}
+		else {
+//			take a string like "Foo Bar" and process it into "%foo%%bar%" for SQL LIKE matching
+			String processedQuery = "%" + String.join("%%",query.toLowerCase().split(" ")) + "%";
+			return items.findAllFiltered(brand, type, processedQuery);
+		}
+		
 	}
 	
 	/**
