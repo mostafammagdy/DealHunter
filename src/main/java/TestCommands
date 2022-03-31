@@ -1,6 +1,10 @@
 1) For login: 
 
-http://localhost:8080/signin?email=kaneezeyo@gmail.com&password=102030
+http://localhost:8080/signin
+{
+    "usernameOrEmail":"testCus@gmail.com",
+    "password":"102030"
+}
 
 2) For signing up as a new user: 
 
