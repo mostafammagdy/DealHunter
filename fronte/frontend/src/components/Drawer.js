@@ -15,6 +15,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import { ConstructionRounded } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 
 export default function DrawerComponent(props) {
@@ -39,14 +40,12 @@ onClick: () => {setSigninBox(true)}
 
 const itemsList = [
   {
-    text: "Brands",
+    text: <Link style ={{textDecoration:"none",color:"black"}} to="/items/brands">Brands</Link>,
     icon :<AbcIcon/>,
-    onClick: () => {setOpenBox(true)}
   },
   {
-  text: "Types",
+  text:  <Link style ={{textDecoration:"none",color:"black"}} to="/items/types">Types</Link>,
   icon: <LibraryBooksIcon />,
-  onClick: () => {setSigninBox(true)}
   
   }
   

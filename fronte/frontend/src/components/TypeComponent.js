@@ -1,7 +1,7 @@
 import React, { useReducer, useState } from "react";
 import Appbar from "./AppBar";
 
-class BrandComponent extends React.Component {
+class TypeComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,7 @@ class BrandComponent extends React.Component {
 
   componentDidMount() {
     console.log("component did mount");
-    fetch("/items/brands", {
+    fetch("/items/types", {
       crossDomain: true,
       method: "GET",
     })
@@ -78,4 +78,4 @@ class BrandComponent extends React.Component {
   }
 }
 
-export default BrandComponent;
+export default TypeComponent;

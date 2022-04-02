@@ -7,6 +7,8 @@ import {Routes,Route} from "react-router-dom";
 import MyAccounts from "./pages/MyAccount"
 import AppBarWithoutSearch from "./components/AppBarWithoutSearch";
 import CheckoutFunction from "./pages/CheckoutFunction";
+import BrandComponent from "./components/BrandComponent";
+import TypeComponent from "./components/TypeComponent";
 function App() {
   return (
     <div className="App">
@@ -18,6 +20,8 @@ function App() {
   <Route path = "/items" element = {<AppBar/>}/>
   <Route path = "myAccount" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
   <Route path = "profile" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
+  <Route path = "/items/brands" element = {<><AppBarWithoutSearch/> <BrandComponent/></>}/>
+  <Route path = "/items/types" element = {<><AppBarWithoutSearch/> <TypeComponent/></>}/>
   
 </Routes>
    
