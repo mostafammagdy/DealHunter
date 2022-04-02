@@ -1,0 +1,16 @@
+1) For login: 
+
+http://localhost:8080/signin
+{
+    "usernameOrEmail":"testCus@gmail.com",
+    "password":"102030"
+}
+
+2) For signing up as a new user: 
+
+http://localhost:8080/signup 
+then go to postman and write in the body the following code: 
+{
+    "email": "testCus@gmail.com",
+    "password": 102030
+}
