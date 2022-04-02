@@ -1,4 +1,4 @@
-.MuiButtonBase-root{
+/* .MuiButtonBase-root{
   display:block !important;
   padding:10px !important;
 }
@@ -6,6 +6,9 @@
 .MuiInputBase-input{
 
 }
+.css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
+width:12% !important;
+} */
 
 h1 {
   text-align: center;

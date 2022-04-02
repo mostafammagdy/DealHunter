@@ -10,6 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
+import AbcIcon from '@mui/icons-material/Abc';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import { ConstructionRounded } from '@mui/icons-material';
@@ -20,7 +22,7 @@ export default function DrawerComponent(props) {
   const [openSignInBox,setSigninBox] = React.useState(false);
 
 
-const itemsList = [
+const loginList = [
 {
   text: "Sign Up",
   icon :<HowToRegOutlinedIcon/>,
@@ -35,12 +37,42 @@ onClick: () => {setSigninBox(true)}
 
 ]
 
+const itemsList = [
+  {
+    text: "Brands",
+    icon :<AbcIcon/>,
+    onClick: () => {setOpenBox(true)}
+  },
+  {
+  text: "Types",
+  icon: <LibraryBooksIcon />,
+  onClick: () => {setSigninBox(true)}
+  
+  }
+  
+  ]
+
+
+
 
     return(
     
   <Drawer onClose = {()=>props.setOpenDrawer(false)}open ={props.openDrawer} >
     <SignUp openBox = {openBox} setOpenBox = {setOpenBox}/>
     <SignIn openBox = {openSignInBox} setOpenBox = {setSigninBox}/>
+      <List>
+        
+        {loginList.map((item, index) => {
+          const {text, icon,onClick} = item;
+          return(
+          <ListItem button key={text} onClick = {onClick}>
+         {icon && <ListItemIcon>{icon}</ListItemIcon>}
+            <ListItemText primary={text} />
+          </ListItem>
+          );
+     })}
+      </List>
+      <Divider/>
       <List>
         
         {itemsList.map((item, index) => {
