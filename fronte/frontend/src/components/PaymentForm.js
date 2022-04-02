@@ -7,7 +7,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 function PaymentForm() {
   return (
-    <React.Fragment>
+    <div>
       <Typography variant="h6" gutterBottom>
         Payment method
       </Typography>
@@ -37,7 +37,7 @@ function PaymentForm() {
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+      </div>
   );
 }
 

@@ -19,7 +19,7 @@ export default function MyAccountButttonManage(props) {
         </div>
       </div>
     
-       <Link style ={{textDecoration:"none",color:"black"}} to="/checkout">
+       <Link style ={{textDecoration:"none",color:"black"}} to={props.Column2LinkTo}>
       <div className='Box col-4'  onClick={props.Column2OnClick}>
         <div className='innerBox'>
         <img src= {props.Column2Image}></img>

@@ -8,7 +8,7 @@ import checkout from '../assets/checkout.jpg'
 export default function MyAccount() {
   
 
-  let handleClick = {
+  const handleClick = {
     onClick: ()=>{console.log("account has been clicked my friend")}, 
     linkTo:"/checkout"
 
@@ -27,11 +27,11 @@ export default function MyAccount() {
     <MyAccountButttonManage Column1Header = "Your Orders" Column1Description = "Track, Return, or View Status"
                             Column2Header = "Account Management" Column2Description = "View, Manage or Edit Account Information" 
                             Column1Image = {searching} Column2Image = {accountIcon}
-                           />
+                            Column2OnClick = {handleClick.onClick} Column2LinkTo={handleClick.linkTo}/>
     <MyAccountButttonManage  Column1Header = "Reviews" Column1Description = "Check your review on Items"
                             Column2Header = "Checkout" Column2Description = "Ready to Pay?"
                             Column1Image = {review} Column2Image = {checkout}
-                            Column2OnClick = {handleClick.onClick} Column2LinkTo="/checkout"/>
+                            Column2OnClick = {handleClick.onClick} Column2LinkTo={handleClick.linkTo}/>
     </>
   )
 

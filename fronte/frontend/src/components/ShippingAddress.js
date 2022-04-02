@@ -7,7 +7,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 
 function ShippingAddress() {
   return (
-    <React.Fragment>
+    <div>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
@@ -98,7 +98,7 @@ function ShippingAddress() {
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </div>
   );
 }
 
