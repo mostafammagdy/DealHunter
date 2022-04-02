@@ -22,6 +22,8 @@ import DrawerComponent from "./Drawer";
 import Drawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
 import CartPreview from "./ShoppingCart";
+import AppBarWithoutSearch from "./AppBarWithoutSearch";
+
 import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
 import {
   CartStateContext,
