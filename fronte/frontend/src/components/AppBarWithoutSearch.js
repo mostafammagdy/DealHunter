@@ -19,6 +19,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DrawerComponent from "./Drawer";
+import Drawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
 import {
   CartStateContext,
@@ -67,14 +68,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function AppBarWithoutSearch() {
+function AppBarWithoutSearch(props) {
   const [inputText, setInputText] = useState("");
-  const { items: cartItems, isCartOpen } = useContext(CartStateContext);
-  const cartDispatch = useContext(CartDispatchContext);
-  const cartQuantity = cartItems.length;
-  const cartTotal = cartItems
-    .map((item) => item.price * item.quantity)
-    .reduce((prev, current) => prev + current, 0);
+  const { items, DataisLoaded, cartItems, onAdd, onRemove } = props;
+  const [cartOpen, setCartOpen] = useState(false);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -82,10 +80,6 @@ function AppBarWithoutSearch() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
-  const handleCartButton = (event) => {
-    event.preventDefault();
-    return toggleCartPopup(cartDispatch);
-  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -159,12 +153,12 @@ function AppBarWithoutSearch() {
     >
       <MenuItem>
         <IconButton
-          onClick={handleCartButton}
           size="large"
-          aria-label="show 6 new mails"
+          aria-label="show 4 new mails"
           color="inherit"
+          onClick={() => setCartOpen(true)}
         >
-          <Badge badgeContent={6} color="error">
+          <Badge badgeContent={4} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -234,10 +228,22 @@ function AppBarWithoutSearch() {
 
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Drawer
+                anchor="right"
+                open={cartOpen}
+                onClose={() => setCartOpen(false)}
+              >
+                <ShoppingCart
+                  cartItems={[]}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                />
+              </Drawer>
               <IconButton
                 size="large"
                 aria-label="show 4 new mails"
                 color="inherit"
+                onClick={() => setCartOpen(true)}
               >
                 <Badge badgeContent={4} color="error">
                   <ShoppingCartIcon />
