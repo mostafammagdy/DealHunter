@@ -1,8 +1,12 @@
 body {
   min-width: 800px;
 }
-.row {
-  margin-top: 75px !important;
+.row{
+    margin-top: 75px !important;
+    
+}
+.row>*{
+    width:20% !important;
 }
 
 .Box {
