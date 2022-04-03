@@ -75,9 +75,9 @@ const itemsList = [
       <List>
         
         {itemsList.map((item, index) => {
-          const {text, icon,onClick} = item;
+          const {text, icon} = item;
           return(
-          <ListItem button key={text} onClick = {onClick}>
+          <ListItem button key={text}>
          {icon && <ListItemIcon>{icon}</ListItemIcon>}
             <ListItemText primary={text} />
           </ListItem>

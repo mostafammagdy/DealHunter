@@ -9,9 +9,6 @@ import MyAccounts from "./pages/MyAccount";
 import DrawerComponent from "./components/Drawer";
 import { useState, useRef, useEffect } from "react";
 import { Card, Footer, Header } from "./components/FooterStyles";
-
-import {Routes,Route} from "react-router-dom";
-import MyAccounts from "./pages/MyAccount"
 import AppBarWithoutSearch from "./components/AppBarWithoutSearch";
 import CheckoutFunction from "./pages/CheckoutFunction";
 import BrandComponent from "./components/BrandComponent";

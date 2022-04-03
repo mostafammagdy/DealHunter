@@ -196,7 +196,7 @@ function AppBarWithoutSearch(props) {
       <DrawerComponent openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
 
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" >
           <Toolbar>
             <IconButton
               size="large"

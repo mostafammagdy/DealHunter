@@ -8,7 +8,13 @@
 }
 .css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
 width:12% !important;
+display:inline !important;
 } */
+
+.MuiToolbar-regular{
+  background: rgba(18, 118, 199, 0.637) !important;
+
+}
 
 h1 {
   text-align: center;
