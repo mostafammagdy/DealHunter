@@ -15,7 +15,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import HoverRating from "./Rating";
-
+import Review from "./Review";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -66,7 +66,10 @@ export default function Item(props) {
       <IconButton size="large" onClick={() => onAdd(item)}>
         Add to Cart
       </IconButton>
-      <HoverRating/>
+      
+   
+      <Review/>
+      
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Description:</Typography>
