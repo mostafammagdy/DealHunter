@@ -92,10 +92,7 @@ public class UserPrincipal implements  UserDetails {
         this.attributes = attributes;
     }
 
-	public String getName() {
-		// TODO Auto-generated method stub
-		return email;
-	}
+	
 
  
 }
