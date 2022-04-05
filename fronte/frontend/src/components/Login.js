@@ -12,7 +12,6 @@ import { makeStyles } from '@material-ui/core';
 import '../styles/SignForm.css';
 import axios from 'axios';
 import { login } from './APIUtils';
-
 import { API_BASE_URL, ACCESS_TOKEN } from '../index.js';
 export default class Login extends Component {
   constructor(props) {
@@ -36,18 +35,18 @@ export default class Login extends Component {
   };
 
   handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const loginRequest = Object.assign({}, this.state);
 
     login(loginRequest)
       .then((response) => {
         //     this.props.history.push('/profile2');
-
+        console.log(response);
         localStorage.setItem(ACCESS_TOKEN, response.accessToken);
         console.log(response.accessToken);
         console.log("You're successfully logged in!");
+        this.props.handler();
       })
-      //    .catch((error) => {});
       .catch((error) => {
         console.log('ERROR: ', error);
       });
@@ -62,10 +61,10 @@ export default class Login extends Component {
         'Content-Type': 'application/json',
       },
     })
-    //  .then((response) => {
-   //     console.log('RESPONSE', response.getText()); // <- Your User Details here.
-   //   })
-      .then (response => response.json())
+      //  .then((response) => {
+      //     console.log('RESPONSE', response.getText()); // <- Your User Details here.
+      //   })
+      .then((response) => response.json())
       .catch((error) => {
         console.log('ERROR: ', error);
       });
@@ -94,29 +93,39 @@ export default class Login extends Component {
         />
         <Stack spacing={2} direction="row" style={{ marginTop: '20px' }}>
           <Button variant="contained">Cancel</Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{ marginlLeft: '5px' }}
-            onClick={this.handleSubmit}
-          >
-            Sign In
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            style={{ marginlLeft: '5px' }}
-            onClick={this.getUserDetails}
-          >
-            button
-          </Button>
-
+          {this.props.authenticated ? (
+            <div>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginlLeft: '5px' }}
+                onClick={this.handler}
+              >
+                Authenticated button
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                style={{ marginlLeft: '5px' }}
+                onClick={this.handleSubmit}
+              >
+                Sign In
+              </Button>
+            </div>
+          )}
           {this.props.authenticated ? (
             <div>
               <p>This is authenticated state{this.props.currentUser}</p>
-              <Button onClick={this.props.onLogout}>Logout</Button>
+
+              <Button onClick={this.currentUser}>
+                {' '}
+                Click to get current User
+              </Button>
             </div>
           ) : (
             <div>

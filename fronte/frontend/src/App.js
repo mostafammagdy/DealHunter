@@ -23,9 +23,11 @@ class App extends Component {
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.loadHandler = this.loadHandler.bind(this);
   }
 
   loadCurrentlyLoggedInUser() {
+    console.log('called it');
     getCurrentUser()
       .then((response) => {
         this.setState({
@@ -33,6 +35,7 @@ class App extends Component {
           authenticated: true,
           loading: false,
         });
+        console.log(response);
       })
       .catch((error) => {
         this.setState({
@@ -41,12 +44,19 @@ class App extends Component {
       });
   }
 
+  loadHandler() {
+    this.setState({
+      authenticated: true,
+    });
+  }
+
   handleLogout() {
     localStorage.removeItem(ACCESS_TOKEN);
     this.setState({
       authenticated: false,
       currentUser: null,
     });
+    console.log('your out');
   }
 
   componentDidMount() {
@@ -80,7 +90,12 @@ class App extends Component {
             element={
               <>
                 <AppBarWithoutSearch />{' '}
-                <Login authenticated={this.state.authenticated} />
+                <Login
+                  authenticated={this.state.authenticated}
+                  handler={this.loadHandler}
+                  onLogout={this.handleLogout}
+                  currentUser={this.loadCurrentlyLoggedInUser}
+                />
               </>
             }
           />
