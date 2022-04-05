@@ -1,103 +1,81 @@
 package ecommerce.controller;
-import ecommerce.dto.*;
-import ecommerce.model.JwtUser;
-import ecommerce.repository.JwtUserRepository;
-import ecommerce.service.CustomUserDetailsService;
-import ecommerce.util.JwtUtil;
+
+import  ecommerce.exception.BadRequestException;
+import  ecommerce.model.AuthProvider;
+import  ecommerce.model.User;
+import  ecommerce.payload.ApiResponse;
+import  ecommerce.payload.AuthResponse;
+import  ecommerce.payload.LoginRequest;
+import   ecommerce.payload.SignUpRequest;
+import ecommerce.repository.UserRepository;
+import  ecommerce.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Collections;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private UserRepository userRepository;
 
     @Autowired
-    CustomUserDetailsService userDetailsService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    JwtUtil jwtUtil;
+    private TokenProvider tokenProvider;
 
-    @Autowired
-    JwtUserRepository userRepository;
-
-    @GetMapping("/hello")
-    public String hello()
-    {
-        return  "Kaneez here";
-    }
-
-
-    @GetMapping("/checkUser")
-    public String checkUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        return  currentPrincipalName;
-    }
-
-    @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-        );
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-
-        final String jwt = jwtUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-
-    }
-
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
+                        loginRequest.getEmail(),
                         loginRequest.getPassword()
                 )
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsernameOrEmail());
 
-        final String jwt = jwtUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        String token = tokenProvider.createToken(authentication);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-
-
-        if(userRepository.findUserByEmail(signUpRequest.getEmail()) != null) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.BAD_REQUEST);
+        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+            throw new BadRequestException("Email address already in use.");
         }
 
         // Creating user's account
-        JwtUser jwtUser = new JwtUser();
-        jwtUser.setEmail(signUpRequest.getEmail());
-        jwtUser.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-        userRepository.save(jwtUser);
-        return ResponseEntity.ok(new ApiResponse(true, "User registered successfully"));
+        User user = new User();
+        user.setEmail(signUpRequest.getEmail());
+        user.setPassword(signUpRequest.getPassword());
+        user.setProvider(AuthProvider.local);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        User result = userRepository.save(user);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/user/me")
+                .buildAndExpand(result.getId()).toUri();
+
+        return ResponseEntity.created(location)
+                .body(new ApiResponse(true, "User registered successfully@"));
     }
+
 }
