@@ -1,20 +1,23 @@
-package ecommerce.dto;
+package ecommerce.payload;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
-import javax.validation.constraints.*;
-
+/**
+ * Created by rajeevkumarsingh on 02/08/17.
+ */
 
 public class SignUpRequest {
+    
 
     @NotBlank
-    @Size(max = 40)
     @Email
     private String email;
 
     @NotBlank
-    @Size(min = 6, max = 20)
     private String password;
 
+ 
 
     public String getEmail() {
         return email;
