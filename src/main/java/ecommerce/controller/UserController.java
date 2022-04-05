@@ -12,11 +12,13 @@ import javax.validation.Valid;
 
 
 import java.util.List;
+import java.util.Optional;
+
 import ecommerce.controller.UserController; 
 import ecommerce.model.User;
 import ecommerce.payload.AddressRequest;
+import ecommerce.payload.BillingRequest;
 import ecommerce.repository.UserRepository;
-import ecommerce.model.Status;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,13 +38,42 @@ public class UserController {
     
     @GetMapping("/user/me")
  //   @PreAuthorize("hasRole('USER')")
-    public String getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-       
+    public String getCurrentUser(@CurrentUser @Valid @RequestBody UserPrincipal userPrincipal) {
+        userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+      //  System.out.println(authentication.getName());
        String a = userPrincipal.getEmail();
-       System.out.println("-----------------");
-       System.out.println(userPrincipal.getEmail());
-       return a;
+        System.out.println("-----------------");
+        System.out.println(userPrincipal.getEmail());
+        return a;
     }
     
-   
+    @PostMapping("/user/me/updateAddress")
+    //@PreAuthorize("hasRole('USER')")
+    public double updateAddress(@CurrentUser @Valid @RequestBody AddressRequest updateAddressRequest, UserPrincipal userPrincipal) {
+    	userRepository.findById(userPrincipal.getId());
+    	User current = null; // this current should point to the statement, but I CANT DO IT -.- 
+    	current.setAddress(updateAddressRequest.getCity());
+    	current.setPostalCode(updateAddressRequest.getCity());
+    	current.setCountry(updateAddressRequest.getCity());
+    	current.setCity(updateAddressRequest.getCity());
+    	return current.getId();
+    }
+    
+    @PostMapping("/user/me/billingAddress")
+    //@PreAuthorize("hasRole('USER')")
+    public double updateAddress(@CurrentUser @Valid @RequestBody BillingRequest updateAddressRequest, UserPrincipal userPrincipal) {
+    	userRepository.findById(userPrincipal.getId());
+    	User current = null; // this current should point to the statement, but I CANT DO IT -.- 
+    	current.setAddress(updateAddressRequest.getBillingCity());
+    	current.setPostalCode(updateAddressRequest.getBillingCity());
+    	current.setCountry(updateAddressRequest.getBillingCity());
+    	current.setCity(updateAddressRequest.getBillingCity());
+    	return current.getId();
+    }
+    
+    
+    
+    
+  
 }

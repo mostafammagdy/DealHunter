@@ -3,9 +3,7 @@ package ecommerce.payload;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
+
 
 public class SignUpRequest {
     
