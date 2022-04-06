@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ecommerce.model.Order;
 import ecommerce.service.OrderService;
+import ecommerce.util.OrderHelper;
 
 @RestController
 @RequestMapping("/orders")
@@ -41,30 +41,19 @@ public class OrderController {
 	}
 	
 	/**
-	 * Adds the item specified by item_id to the order specified by id.<br>
-	 * Quantity is passed with a RequestParam, Defaulted to 1. 
-	 * Updates order.totalPrice with the new item(s)
-	 * @param id
-	 * @param item_id
-	 * @param quantity
-	 */
-	@PostMapping(value="/{id}/{item_id}")
-	public void addItemToOrder(
-			@PathVariable long id, 
-			@PathVariable long item_id,
-			@RequestParam(defaultValue="1") int quantity) {
-		addItemToOrder(id,item_id,quantity);
-	}
-	
-	/**
-	 * Sets the order to "finished" and updates item stock to reflect checked out items.
-	 * @param id
+	 * The intended way to create orders. Example request body: <br>
+	 * [ { "item":1, "quantity":2 } ]<br>
+	 * represents a new order containing 2 items with id 1
+	 * 
+	 * @param username
+	 * @param orderItems
 	 * @return
 	 */
-	@PostMapping(value="/checkout/{id}")
-	public String checkoutOrder(@PathVariable long id) {
-		return orders.checkout(id);
+	@PostMapping(value="/process/{user}")
+	public String createOrder(@PathVariable String username, @RequestBody List<OrderHelper> orderItems) {
+		return orders.createAndCheckout(username, orderItems);
 	}
+	
 	
 	/**
 	 * Updates an Order

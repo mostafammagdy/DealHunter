@@ -10,8 +10,10 @@ import ecommerce.model.Item;
 import ecommerce.model.Order;
 import ecommerce.model.OrderItem;
 import ecommerce.repository.ItemRepository;
+import ecommerce.repository.JwtUserRepository;
 import ecommerce.repository.OrderItemRepository;
 import ecommerce.repository.OrderRepository;
+import ecommerce.util.OrderHelper;
 
 @Service
 public class OrderService {
@@ -22,6 +24,8 @@ public class OrderService {
 	private ItemRepository items;
 	@Autowired
 	private OrderItemRepository order_items;
+	@Autowired
+	private JwtUserRepository users;
 	
 	/**
 	 * Get a list of all orders
@@ -38,6 +42,28 @@ public class OrderService {
 	 */
 	public List<Order> getByUser(int id){
 		return orders.findByUser_Id(id);
+	}
+	
+
+	public String createAndCheckout(String user, List<OrderHelper> orderItems) {
+		
+		Order order = new Order(users.findByEmail(user), "started");
+		int totalPrice = 0;
+		for (OrderHelper orderHelper : orderItems) {
+			Item item = items.getOne(orderHelper.getItem());
+			// max order quantity is the item's stock quantity
+			int quantity = Math.min(item.getQuantity(), orderHelper.getQuantity());
+			// create and save OrderItem
+			OrderItem orderItem = new OrderItem(quantity, item, order);
+			order_items.save(orderItem);
+			// add to other side of relationship
+			order.getOrderItems().add(orderItem);
+			// update order total price
+			totalPrice +=  orderItem.getPrice() * quantity;
+		}
+		order.setTotal_price(totalPrice);
+		orders.save(order);
+		return checkout(order.getId());		
 	}
 	
 	
@@ -87,22 +113,31 @@ public class OrderService {
 	 * @return
 	 */
 	public String checkout(long id) {
-		if(orders.existsById(id)) {
-			Order order = orders.getOne(id);
-			if (order.getStatus().equals("finished")) {
-				return "Order already finished.";
-			}
-			// subtract item stock quantities
-			for (OrderItem orderItem: order.getOrderItems()) {
-				Item item = orderItem.getItem();
-				item.setQuantity(item.getQuantity() - orderItem.getQuantity());
-				items.save(item);
-			}
-			order.setStatus("finished");
-			orders.save(order);
-			return "Successful Checkout.";
+		if(!orders.existsById(id)) {
+			return "No order with that id.";
 		}
-		return "No unfinished order with that id.";
+		Order order = orders.getOne(id);
+		
+		if (!order.getStatus().equals("started")) {
+			return "Order already finished or rejected.";
+		}
+		// rejecting 1/3 orders
+		if (order.getId() % 3 == 0) {
+			order.setStatus("rejected");
+			return "Order rejected.";
+		}
+		
+		// subtract item stock quantities
+		for (OrderItem orderItem: order.getOrderItems()) {
+			Item item = orderItem.getItem();
+			item.setQuantity(item.getQuantity() - orderItem.getQuantity());
+			items.save(item);
+		}
+		order.setStatus("finished");
+		orders.save(order);
+		return "Successful Checkout.";
+		
+		
 	}
 	
 	/**

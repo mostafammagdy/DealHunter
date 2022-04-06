@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +22,7 @@ public class Order implements Serializable {
 
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@ManyToOne
@@ -33,23 +35,20 @@ public class Order implements Serializable {
 	@NotNull
 	private int total_price;
 	
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order",cascade=CascadeType.ALL)
 	private List<OrderItem> orderItems;
 	
 	public Order() {
 
 	}
-
-
-	public Order(long id, JwtUser user, String status) {
+	
+	public Order(JwtUser user, String status) {
 		super();
-		this.id = id;
 		this.user = user;
 		this.status = status;
 		this.total_price = 0;
 		this.orderItems = new ArrayList<OrderItem>();
 	}
-
 
 
 	public long getId() {
