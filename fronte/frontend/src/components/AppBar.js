@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import ItemComponent from "./ItemComponent";
 
 import { styled, alpha } from "@mui/material/styles";
@@ -21,18 +21,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DrawerComponent from "./Drawer";
 import Drawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
-import CartPreview from "./ShoppingCart";
-import AppBarWithoutSearch from "./AppBarWithoutSearch";
 
-import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
-import {
-  CartStateContext,
-  CartDispatchContext,
-  toggleCartPopup,
-} from "../contexts/cart";
 import ShoppingCart from "../components/ShoppingCart";
-import Item from "./Item";
-import Fetchh from "./Fetchh";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -77,7 +68,25 @@ function Appbar(props) {
   const [inputText, setInputText] = useState("");
   const { items, DataisLoaded } = props;
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+
+  const [cartItems, setCartItems] = useState(() => {
+    const stickyicky = localStorage.getItem("cart");
+
+    return stickyicky !== null ? JSON.parse(stickyicky) : [];
+  });
+
+  useEffect(() => {
+    //turn into js
+    //will add a fetch for the cart items based on id
+
+    //console.log("Localstorage:", JSON.parse(localStorage.getItem("cart")));
+    //let ls = JSON.parse(localStorage.getItem("cart"));
+    //load the persisted cart if it exists
+    // if (ls) setCartItems(ls);
+    // localStorage.setItem('cart',JSON.stringify(cartItems))
+    let thiscart = JSON.stringify(cartItems);
+    localStorage.setItem("cart", thiscart);
+  }, [cartItems]);
 
   const getTotalItems = (items: []) =>
     items.reduce((acc, item) => acc + item.quantity, 0);
@@ -87,7 +96,7 @@ function Appbar(props) {
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-  const onAdd = (product) => {
+  const onAdd = async (product) => {
     const isItemInCart = cartItems.find((item) => item.id === product.id);
     console.log("adding");
     if (isItemInCart) {
@@ -104,6 +113,13 @@ function Appbar(props) {
       console.log("cartItems.quantity");
       setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
+    console.log("adding to local storage");
+    console.log(cartItems);
+    //const stringCart = JSON.stringify(cartItems);
+    //localStorage.setItem("cart", stringCart);
+    //console.log("addED to local storage");
+    //await timeout(5000);
+    //console.log("Localstorage:", JSON.parse(localStorage.getItem("cart")));
   };
 
   const onRemove = (product) => {
@@ -122,6 +138,8 @@ function Appbar(props) {
         )
       );
     }
+    //const stringCart = JSON.stringify(cartItems);
+    //localStorage.setItem("cart", stringCart);
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);

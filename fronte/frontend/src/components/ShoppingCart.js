@@ -81,6 +81,9 @@ export default function ShoppingCart(props) {
         </Wrapper2>
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
+      <button size="big" onClick={console.log("attempted purchase")}>
+        Checkout
+      </button>
     </Wrapper>
   );
 }

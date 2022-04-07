@@ -1,6 +1,5 @@
 import * as React from "react";
-import { useState, useContext } from "react";
-import ItemComponent from "./ItemComponent";
+import { useState, useEffect } from "react";
 
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -21,11 +20,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DrawerComponent from "./Drawer";
 import Drawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
-import {
-  CartStateContext,
-  CartDispatchContext,
-  toggleCartPopup,
-} from "../contexts/cart";
+
 import ShoppingCart from "../components/ShoppingCart";
 
 const Search = styled("div")(({ theme }) => ({
@@ -70,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function AppBarWithoutSearch(props) {
   const [inputText, setInputText] = useState("");
-  const { items, DataisLoaded, cartItems, onAdd, onRemove } = props;
+  const { items, DataisLoaded } = props;
   const [cartOpen, setCartOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -79,7 +74,59 @@ function AppBarWithoutSearch(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [cartItems, setCartItems] = useState(() => {
+    const stickyicky = localStorage.getItem("cart");
 
+    return stickyicky !== null ? JSON.parse(stickyicky) : [];
+  });
+
+  useEffect(() => {
+    let thiscart = JSON.stringify(cartItems);
+    localStorage.setItem("cart", thiscart);
+  }, [cartItems]);
+
+  const getTotalItems = (items: []) =>
+    items.reduce((acc, item) => acc + item.quantity, 0);
+
+  const onAdd = (product) => {
+    const isItemInCart = cartItems.find((item) => item.id === product.id);
+    console.log("adding");
+    if (isItemInCart) {
+      console.log("adding +1");
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id
+            ? { ...isItemInCart, quantity: isItemInCart.quantity + 1 }
+            : x
+        )
+      );
+    } else {
+      console.log("adding new");
+      console.log("cartItems.quantity");
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
+    //let stringCart = JSON.stringify(cartItems);
+    //localStorage.setItem("cart", stringCart);
+  };
+  const onRemove = (product) => {
+    const isItemInCart = cartItems.find((item) => item.id === product.id);
+    console.log({ isItemInCart });
+    if (isItemInCart.quantity === 1) {
+      console.log("there was only one item its removed now");
+      setCartItems(cartItems.filter((x) => x.id !== product.id));
+    } else {
+      console.log("there's more than one, its being removed rn");
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id
+            ? { ...isItemInCart, quantity: isItemInCart.quantity - 1 }
+            : x
+        )
+      );
+    }
+    //let stringCart = JSON.stringify(cartItems);
+    //localStorage.setItem("cart", stringCart);
+  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -196,7 +243,7 @@ function AppBarWithoutSearch(props) {
       <DrawerComponent openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
 
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" >
+        <AppBar position="static">
           <Toolbar>
             <IconButton
               size="large"
@@ -234,7 +281,7 @@ function AppBarWithoutSearch(props) {
                 onClose={() => setCartOpen(false)}
               >
                 <ShoppingCart
-                  cartItems={[]}
+                  cartItems={cartItems}
                   onAdd={onAdd}
                   onRemove={onRemove}
                 />
@@ -245,7 +292,7 @@ function AppBarWithoutSearch(props) {
                 color="inherit"
                 onClick={() => setCartOpen(true)}
               >
-                <Badge badgeContent={4} color="error">
+                <Badge badgeContent={getTotalItems(cartItems)} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
