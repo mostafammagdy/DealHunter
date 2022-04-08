@@ -11,8 +11,9 @@ width:12% !important;
 display:inline !important;
 } */
 
-.MuiToolbar-regular{
-  background: rgba(18, 118, 199, 0.637) !important;
+.MuiToolbar-regular,.css-hip9hq-MuiPaper-root-MuiAppBar-root{
+  background: #1976d2 !important;
+  color:white;
 
 }
 
@@ -56,9 +57,6 @@ h1 {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
 @keyframes App-logo-spin {
   from {

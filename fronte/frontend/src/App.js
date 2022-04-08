@@ -1,18 +1,15 @@
 import logo from "./logo.svg";
 import "./App.css";
-
-import Fetchh from "./components/Fetchh";
-import ItemComponent from "./components/ItemComponent";
-import AppBar from "./components/AppBar";
+import Fetch from "./components/Fetch";
 import { Routes, Route } from "react-router-dom";
 import MyAccounts from "./pages/MyAccount";
 import DrawerComponent from "./components/Drawer";
 import { useState, useRef, useEffect } from "react";
-import { Card, Footer, Header } from "./components/FooterStyles";
 import AppBarWithoutSearch from "./components/AppBarWithoutSearch";
 import CheckoutFunction from "./pages/CheckoutFunction";
-import BrandComponent from "./components/BrandComponent";
-import TypeComponent from "./components/TypeComponent";
+
+
+
 function App() {
   const [expanded, setExpanded] = useState(false);
   const [accodionHeight, setAccodionHeight] = useState(0);
@@ -22,14 +19,15 @@ function App() {
 
   return (
     <div className="App">
+  
 <Routes>
   <Route path = "checkout" element = {<><AppBarWithoutSearch/> <CheckoutFunction/></>}/>
-<Route path="/" element={<Fetchh />} />
-        <Route path="/items" element={<Fetchh />} />
+<Route path="/" element={<Fetch path = "/" />} />
+    <Route path="/items" element={<Fetch path = "/items" />} />
   <Route path = "myAccount" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
   <Route path = "profile" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
-  <Route path = "/items/brands" element = {<><AppBarWithoutSearch/> <BrandComponent/></>}/>
-  <Route path = "/items/types" element = {<><AppBarWithoutSearch/> <TypeComponent/></>}/>
+  <Route path = "/items/brands" element = {<><Fetch path = "/items/brands"/></>}/>
+  <Route path = "/items/types" element = {<><Fetch path = "/items/types"/></>}/>
   
 </Routes>
    
