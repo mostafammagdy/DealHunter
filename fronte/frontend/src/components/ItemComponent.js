@@ -13,19 +13,9 @@ function ItemComponent(props) {
 
   return (
     <div>
+      <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1>
       <div className="item-container">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "50vh",
-          }}
-        >
-          <h1> featured items </h1>
-
-          <br />
-        </div>
+     
         {items
           .filter((val) => {
             if (inputText == "") {

@@ -24,20 +24,24 @@ export default function Review() {
         Submit a Review
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Submit a Review</DialogTitle>
+        <DialogTitle style = {{"text-align":"center"}}>Submit a Review</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText style = {{"margin-bottom":"10px"}}>
           Please be respectful when submitting reviews 
           </DialogContentText>
           <HoverRating/>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="outlined-basic"
             label="Write your Review"
             type="review"
             fullWidth
-            variant="standard"
+            variant="outlined"
+            multiline
+            rows={4}
+            
+            
           />
         </DialogContent>
         <DialogActions>

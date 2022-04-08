@@ -23,6 +23,9 @@ import Drawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
 import CartPreview from "./ShoppingCart";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
+import { LoadingButton } from '@mui/lab';
+import BrandFetch from './BrandFetch'
+import SendIcon from '@mui/icons-material/Send';
 
 import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
 import {
@@ -75,11 +78,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Appbar(props) {
   const [inputText, setInputText] = useState("");
-  const { items, DataisLoaded } = props;
+  const { items, DataisLoaded, brands, filter } = props;
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [brandFilter,setFilter] = useState(items)
+  const [loading, setLoading] = React.useState(false);
 
-  const getTotalItems = (items: []) =>
+  const getTotalItems = (items) =>
     items.reduce((acc, item) => acc + item.quantity, 0);
 
   let inputHandler = (e) => {
@@ -131,6 +136,7 @@ function Appbar(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -151,6 +157,16 @@ function Appbar(props) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const filterBrand = (uniqueBrand) =>{
+
+    console.log(uniqueBrand)
+    const filteredItems=items.filter(item => item.brand == `${uniqueBrand}`)
+    setFilter(filteredItems)
+    
+    }
+
+
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -260,7 +276,7 @@ function Appbar(props) {
               sx={{ display: { xs: "none", sm: "block" } }}
             >
               DealHunter
-              <div>Hello, {cartItems.length}!</div>
+              
             </Typography>
             <Search>
               <SearchIconWrapper>
@@ -333,12 +349,51 @@ function Appbar(props) {
             </Box>
           </Toolbar>
         </AppBar>
+        
+      <div style={{"text-align":"center", "margin-top":"5em","padding":"20px"}}>
+      <LoadingButton
+        size="small"
+        onClick= {()=>setFilter(items)}
+        endIcon={<SendIcon />}
+        loading={loading}
+        loadingPosition="end"
+        variant="contained"
+        style={{"margin-right":"20px"}}
+      >
+        All
+        </LoadingButton>
+        {brands.map( brand => (
+        <LoadingButton
+        size="small"
+        onClick= {()=>filterBrand(brand)}
+        endIcon={<SendIcon />}
+        loading={loading}
+        loadingPosition="end"
+        variant="contained"
+        style={{"margin-right":"20px"}}
+      >
+              {brand}
 
+      </LoadingButton>
+      
+         ))}
+
+   
+
+
+   
+      
+  </div>
+
+
+
+
+{console.log(brandFilter)}
         <ItemComponent
           onAdd={onAdd}
           inputText={inputText}
           cartItems={cartItems}
-          items={items}
+          items={brandFilter}
         />
 
         {renderMobileMenu}

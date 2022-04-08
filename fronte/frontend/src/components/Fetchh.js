@@ -4,10 +4,15 @@ import ItemComponent from "./ItemComponent";
 import Item from "./Item";
 import AppBar from "./AppBar";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Fetchh() {
   const [items, setItems] = useState([]);
   const [DataisLoaded, setDataisLoaded] = useState(false);
+  const [brands,setBrands] = useState([]);
+  const [ filter, setFilter] =  useState([]);
+ 
 
   useEffect(() => {
     console.log("component mounted eh");
@@ -21,6 +26,10 @@ function Fetchh() {
         const info = items;
         if (info !== undefined) {
           setItems(json);
+          setFilter(json)
+          let arr = json.map(item=>item.brand)
+          let removedDuplicateBrands = [...new Set(arr)];
+          setBrands(removedDuplicateBrands)
           setDataisLoaded(true);
         }
       });
@@ -28,17 +37,16 @@ function Fetchh() {
 
   if (!DataisLoaded)
     return (
-      <div>
-        <h1>got milk1</h1>
-        <h1>Please ewait...</h1>
-      </div>
+      <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
     );
 
   return (
     <div>
-      <AppBar items={items} DataisLoaded={DataisLoaded} />
+      <AppBar items={items} DataisLoaded={DataisLoaded} brands = {brands} filter = {filter} />
 
-      <h1>got milk2</h1>
+      
     </div>
   );
 }

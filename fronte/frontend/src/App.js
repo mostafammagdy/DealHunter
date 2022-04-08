@@ -13,6 +13,10 @@ import AppBarWithoutSearch from "./components/AppBarWithoutSearch";
 import CheckoutFunction from "./pages/CheckoutFunction";
 import BrandComponent from "./components/BrandComponent";
 import TypeComponent from "./components/TypeComponent";
+
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+const queryClient = new QueryClient()
+
 function App() {
   const [expanded, setExpanded] = useState(false);
   const [accodionHeight, setAccodionHeight] = useState(0);
@@ -22,16 +26,18 @@ function App() {
 
   return (
     <div className="App">
+      <QueryClientProvider client={queryClient}>
 <Routes>
   <Route path = "checkout" element = {<><AppBarWithoutSearch/> <CheckoutFunction/></>}/>
 <Route path="/" element={<Fetchh />} />
-        <Route path="/items" element={<Fetchh />} />
+    <Route path="/items" element={<Fetchh />} />
   <Route path = "myAccount" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
   <Route path = "profile" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
-  <Route path = "/items/brands" element = {<><AppBarWithoutSearch/> <BrandComponent/></>}/>
+  <Route path = "/items/brands" element = {<><BrandComponent/></>}/>
   <Route path = "/items/types" element = {<><AppBarWithoutSearch/> <TypeComponent/></>}/>
   
 </Routes>
+</QueryClientProvider>
    
     </div>
   );
