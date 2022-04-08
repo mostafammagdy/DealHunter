@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,37 +17,35 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "Cart")
+@Table(name = "Cart_Items")
 public class Cart implements Serializable {
 
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@ManyToOne
 	@JoinColumn
 	private JwtUser user;
+
 	
 	@NotNull
 	private int total_price;
 	
-	@OneToMany(mappedBy = "cart")
+	@OneToMany(mappedBy = "cart",cascade=CascadeType.ALL)
 	private List<CartItem> cartItems;
 	
 	public Cart() {
 
 	}
-
-
-	public Cart(long id, JwtUser user, String status) {
+	
+	public Cart(JwtUser user) {
 		super();
-		this.id = id;
 		this.user = user;
 		this.total_price = 0;
 		this.cartItems = new ArrayList<CartItem>();
 	}
-
 
 
 	public long getId() {
@@ -71,7 +71,6 @@ public class Cart implements Serializable {
 	}
 
 
-
 	public int getTotal_price() {
 		return total_price;
 	}
@@ -87,7 +86,7 @@ public class Cart implements Serializable {
 	}
 
 
-	public void setCartItems(List<CartItem> cartItems) {
+	public void setOrderItems(List<CartItem> cartItems) {
 		this.cartItems = cartItems;
 		
 	}

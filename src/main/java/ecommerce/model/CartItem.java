@@ -2,21 +2,21 @@ package ecommerce.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "Cart_Item")
+@Table(name = "POItem")
 public class CartItem implements Serializable{
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	private int price;
@@ -27,7 +27,7 @@ public class CartItem implements Serializable{
 	@JoinColumn()
 	private Item item;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn()
 	private Cart cart;
 	
@@ -37,9 +37,8 @@ public class CartItem implements Serializable{
 	}
 
 
-	public CartItem(long id, int price, int quantity, Item item, Cart cart) {
+	public CartItem(int price, int quantity, Item item, Cart cart) {
 		super();
-		this.id = id;
 		this.price = price;
 		this.quantity = quantity;
 		this.item = item;
