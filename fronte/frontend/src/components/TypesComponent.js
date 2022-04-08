@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 import CartPreview from "./ShoppingCart";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
 import { LoadingButton } from '@mui/lab';
-import BrandFetch from './BrandFetch'
+import TypesFetch from './TypesFetch'
 import SendIcon from '@mui/icons-material/Send';
 
 import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
@@ -76,12 +76,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function BrandComponent(props) {
+function TypesComponent(props) {
   const [inputText, setInputText] = useState("");
-  const { items, DataisLoaded, brands, filter } = props;
+  const { items, DataisLoaded, types
+    , filter } = props;
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [brandFilter,setFilter] = useState(items)
+  const [typesFilter,setFilter] = useState(items)
   const [loading, setLoading] = React.useState(false);
 
   const getTotalItems = (items) =>
@@ -158,10 +159,10 @@ function BrandComponent(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const filterBrand = (uniqueBrand) =>{
+  const filterType = (uniqueType) =>{
 
-    console.log(uniqueBrand)
-    const filteredItems=items.filter(item => item.brand == `${uniqueBrand}`)
+    console.log(uniqueType)
+    const filteredItems=items.filter(item => item.type == `${uniqueType}`)
     setFilter(filteredItems)
     
     }
@@ -351,7 +352,7 @@ function BrandComponent(props) {
         </AppBar>
         
       <div style={{"text-align":"center", "margin-top":"5em","padding":"20px"}}>
-        <h1>Browse by Brands</h1>
+        <h1>Browse by Types</h1>
       <LoadingButton
         size="small"
         onClick= {()=>setFilter(items)}
@@ -363,17 +364,17 @@ function BrandComponent(props) {
       >
         All
         </LoadingButton>
-        {brands.map( brand => (
+        {types.map( type => (
         <LoadingButton
         size="small"
-        onClick= {()=>filterBrand(brand)}
+        onClick= {()=>filterType(type)}
         endIcon={<SendIcon />}
         loading={loading}
         loadingPosition="end"
         variant="contained"
         style={{"margin-right":"20px"}}
       >
-              {brand}
+              {type}
 
       </LoadingButton>
       
@@ -389,12 +390,12 @@ function BrandComponent(props) {
 
 
 
-{console.log(brandFilter)}
+{console.log(typesFilter)}
         <ItemComponent
           onAdd={onAdd}
           inputText={inputText}
           cartItems={cartItems}
-          items={brandFilter}
+          items={typesFilter}
         />
 
         {renderMobileMenu}
@@ -403,4 +404,4 @@ function BrandComponent(props) {
     </div>
   );
 }
-export default BrandComponent;
+export default TypesComponent;

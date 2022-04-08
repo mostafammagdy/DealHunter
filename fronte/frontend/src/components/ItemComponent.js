@@ -13,7 +13,7 @@ function ItemComponent(props) {
 
   return (
     <div>
-      <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1>
+      {/* <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1> */}
       <div className="item-container">
      
         {items

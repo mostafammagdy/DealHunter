@@ -81,7 +81,6 @@ function Appbar(props) {
   const { items, DataisLoaded, brands, filter } = props;
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [brandFilter,setFilter] = useState(items)
   const [loading, setLoading] = React.useState(false);
 
   const getTotalItems = (items) =>
@@ -158,13 +157,7 @@ function Appbar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const filterBrand = (uniqueBrand) =>{
-
-    console.log(uniqueBrand)
-    const filteredItems=items.filter(item => item.brand == `${uniqueBrand}`)
-    setFilter(filteredItems)
-    
-    }
+ 
 
 
 
@@ -350,50 +343,13 @@ function Appbar(props) {
           </Toolbar>
         </AppBar>
         
-      <div style={{"text-align":"center", "margin-top":"5em","padding":"20px"}}>
-      <LoadingButton
-        size="small"
-        onClick= {()=>setFilter(items)}
-        endIcon={<SendIcon />}
-        loading={loading}
-        loadingPosition="end"
-        variant="contained"
-        style={{"margin-right":"20px"}}
-      >
-        All
-        </LoadingButton>
-        {brands.map( brand => (
-        <LoadingButton
-        size="small"
-        onClick= {()=>filterBrand(brand)}
-        endIcon={<SendIcon />}
-        loading={loading}
-        loadingPosition="end"
-        variant="contained"
-        style={{"margin-right":"20px"}}
-      >
-              {brand}
-
-      </LoadingButton>
-      
-         ))}
-
-   
-
-
-   
-      
-  </div>
-
-
-
-
-{console.log(brandFilter)}
+  
+        <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1>
         <ItemComponent
           onAdd={onAdd}
           inputText={inputText}
           cartItems={cartItems}
-          items={brandFilter}
+          items={items}
         />
 
         {renderMobileMenu}

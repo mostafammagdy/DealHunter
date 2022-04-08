@@ -26,10 +26,6 @@ function Fetchh() {
         const info = items;
         if (info !== undefined) {
           setItems(json);
-          setFilter(json)
-          let arr = json.map(item=>item.brand)
-          let removedDuplicateBrands = [...new Set(arr)];
-          setBrands(removedDuplicateBrands)
           setDataisLoaded(true);
         }
       });
@@ -44,7 +40,7 @@ function Fetchh() {
 
   return (
     <div>
-      <AppBar items={items} DataisLoaded={DataisLoaded} brands = {brands} filter = {filter} />
+      <AppBar items={items} DataisLoaded={DataisLoaded} />
 
       
     </div>

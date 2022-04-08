@@ -6,11 +6,11 @@ import AppBar from "./AppBar";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import BrandComponent from "./BrandComponent";
-function BrandFetch() {
+import TypesComponent from "./TypesComponent";
+function TypesFetch() {
   const [items, setItems] = useState([]);
   const [DataisLoaded, setDataisLoaded] = useState(false);
-  const [brands,setBrands] = useState([]);
+  const [types,setTypes] = useState([]);
   const [ filter, setFilter] =  useState([]);
  
 
@@ -27,9 +27,9 @@ function BrandFetch() {
         if (info !== undefined) {
           setItems(json);
           setFilter(json)
-          let arr = json.map(item=>item.brand)
-          let removedDuplicateBrands = [...new Set(arr)];
-          setBrands(removedDuplicateBrands)
+          let arr = json.map(item=>item.type)
+          let removedDuplicateTypes = [...new Set(arr)];
+          setTypes(removedDuplicateTypes)
           setDataisLoaded(true);
         }
       });
@@ -44,10 +44,10 @@ function BrandFetch() {
 
   return (
     <div>
-      <BrandComponent items={items} DataisLoaded={DataisLoaded} brands = {brands} filter = {filter} />
+      <TypesComponent items={items} DataisLoaded={DataisLoaded} types = {types} filter = {filter} />
 
       
     </div>
   );
 }
-export default BrandFetch;
+export default TypesFetch;
