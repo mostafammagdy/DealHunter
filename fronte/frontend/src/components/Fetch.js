@@ -6,12 +6,15 @@ import AppBar from "./AppBar";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import BrandComponent from "./BrandComponent";
-function BrandFetch() {
+import BrandComponent from './BrandComponent'
+import TypesComponent from './TypesComponent'
+
+function Fetch(props) {
   const [items, setItems] = useState([]);
   const [DataisLoaded, setDataisLoaded] = useState(false);
   const [brands,setBrands] = useState([]);
   const [ filter, setFilter] =  useState([]);
+  const [types,setTypes] = useState([]);
  
 
   useEffect(() => {
@@ -26,11 +29,19 @@ function BrandFetch() {
         const info = items;
         if (info !== undefined) {
           setItems(json);
-          setFilter(json)
-          let arr = json.map(item=>item.brand)
-          let removedDuplicateBrands = [...new Set(arr)];
-          setBrands(removedDuplicateBrands)
           setDataisLoaded(true);
+
+          setFilter(json)
+          let arrayBrands = json.map(item=>item.brand)
+          let removedDuplicateBrands = [...new Set(arrayBrands)];
+          setBrands(removedDuplicateBrands)
+
+  
+          let arrayTypes = json.map(item=>item.type)
+          let removedDuplicateTypes = [...new Set(arrayTypes)];
+          setTypes(removedDuplicateTypes)
+
+
         }
       });
   }, []);
@@ -41,13 +52,34 @@ function BrandFetch() {
       <CircularProgress />
     </Box>
     );
-
+if(props.path == "/" || props.path == "/items"){
   return (
     <div>
-      <BrandComponent items={items} DataisLoaded={DataisLoaded} brands = {brands} filter = {filter} />
+      <AppBar items={items} DataisLoaded={DataisLoaded} />
 
       
     </div>
   );
+} else if(props.path == "/items/brands"){
+
+  return (
+    <div>
+    <BrandComponent items={items} DataisLoaded={DataisLoaded} brands = {brands} filter = {filter} />
+
+    
+  </div>
+  );
+
+} else if(props.path == "/items/types"){
+  return (
+
+    <div>
+    <TypesComponent items={items} DataisLoaded={DataisLoaded} types = {types} filter = {filter} />
+
+    
+  </div>
+
+  );
 }
-export default BrandFetch;
+}
+export default Fetch;

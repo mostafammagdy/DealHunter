@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState, useContext } from "react";
 import ItemComponent from "./ItemComponent";
-
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -24,9 +23,7 @@ import { Link } from "react-router-dom";
 import CartPreview from "./ShoppingCart";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
 import { LoadingButton } from '@mui/lab';
-import BrandFetch from './BrandFetch'
 import SendIcon from '@mui/icons-material/Send';
-
 import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
 import {
   CartStateContext,
@@ -35,7 +32,9 @@ import {
 } from "../contexts/cart";
 import ShoppingCart from "../components/ShoppingCart";
 import Item from "./Item";
-import Fetchh from "./Fetchh";
+import Fetch from "./Fetch";
+
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,

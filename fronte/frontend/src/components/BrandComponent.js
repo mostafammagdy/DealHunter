@@ -24,9 +24,7 @@ import { Link } from "react-router-dom";
 import CartPreview from "./ShoppingCart";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
 import { LoadingButton } from '@mui/lab';
-import BrandFetch from './BrandFetch'
 import SendIcon from '@mui/icons-material/Send';
-
 import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
 import {
   CartStateContext,
@@ -35,7 +33,9 @@ import {
 } from "../contexts/cart";
 import ShoppingCart from "../components/ShoppingCart";
 import Item from "./Item";
-import Fetchh from "./Fetchh";
+import Fetch from "./Fetch";
+
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -355,9 +355,6 @@ function BrandComponent(props) {
       <LoadingButton
         size="small"
         onClick= {()=>setFilter(items)}
-        endIcon={<SendIcon />}
-        loading={loading}
-        loadingPosition="end"
         variant="contained"
         style={{"margin-right":"20px"}}
       >
@@ -367,9 +364,6 @@ function BrandComponent(props) {
         <LoadingButton
         size="small"
         onClick= {()=>filterBrand(brand)}
-        endIcon={<SendIcon />}
-        loading={loading}
-        loadingPosition="end"
         variant="contained"
         style={{"margin-right":"20px"}}
       >
@@ -385,11 +379,6 @@ function BrandComponent(props) {
    
       
   </div>
-
-
-
-
-{console.log(brandFilter)}
         <ItemComponent
           onAdd={onAdd}
           inputText={inputText}
