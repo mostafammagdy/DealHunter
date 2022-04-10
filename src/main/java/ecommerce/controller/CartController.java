@@ -24,7 +24,7 @@ public class CartController {
 	private CartService carts;
 
 	@GetMapping
-	public List<Cart> getAllOrders(){
+	public List<Cart> getAllCarts(){
 		return carts.getAll();
 	}
 	
@@ -49,7 +49,7 @@ public class CartController {
 	 * @param orderItems
 	 * @return
 	 */
-	@PostMapping(value="/process/{user}")
+	@PostMapping(value="/cart/{user}")
 	public Cart createCart(@PathVariable String username, @RequestBody List<CartHelper> cartItems) {
 		return carts.createAndPull(username, cartItems);
 	}
@@ -61,7 +61,7 @@ public class CartController {
 	 * @param id
 	 * @return
 	 */
-	@PutMapping(value="/{id}")
+	@PutMapping(value="/cart/{id}")
 	public Cart updateCart(@RequestBody Cart cart, @PathVariable long id) {
 		return carts.update(cart, id);
 	}
