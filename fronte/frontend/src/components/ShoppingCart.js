@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import { CartItemType } from "../App";
-
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function ShoppingCart(props) {
@@ -81,9 +81,13 @@ export default function ShoppingCart(props) {
         </Wrapper2>
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
+      <Link style={{ textDecoration: "none", color: "black" }} to="/checkout">
       <button size="big" onClick={console.log("attempted purchase")}>
-        Checkout
+     
+          Checkout
+        
       </button>
+      </Link>
     </Wrapper>
   );
 }
