@@ -6,6 +6,11 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
+import { TextField } from "@material-ui/core";
+import {useEffect} from "react"
+
+
+var totalPrice = 0;
 
 const products = JSON.parse(localStorage.getItem('cart'))
 
@@ -25,6 +30,10 @@ const payments = [
   { name: "Expiry date", detail: "04/2024" }
 ];
 
+
+
+
+
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: `${theme.spacing.unit}px 0`
@@ -38,23 +47,38 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Review(props) {
+
+
+    products.map(product=>{
+    totalPrice = totalPrice + (product.quantity*product.price)
+    console.log(totalPrice)
+    })
+    
+
+
+
   const classes  = useStyles();
   return (
+  
     <React.Fragment>
+        {console.log(totalPrice)}
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
         {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
+          <ListItem className={classes.listItem} key={product.name} style={{}}>
             <ListItemText primary={product.name} secondary={product.description} />
-            <Typography variant="body2">{product.price}</Typography>
+            <ListItemText style={{"textAlign":"end"}} primary={"$"+product.price} secondary={"Quantity x"+product.quantity} />
+            {/* <ListItemText style={{}} primary={product.price} secondary={product.quantity} /> */}
+            
+            
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            {"$"+totalPrice/2}
           </Typography>
         </ListItem>
       </List>
