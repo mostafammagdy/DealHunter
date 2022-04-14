@@ -15,7 +15,6 @@ function ItemComponent(props) {
     <div>
       {/* <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1> */}
       <div className="item-container">
-     
         {items
           .filter((val) => {
             if (inputText == "") {
@@ -25,7 +24,7 @@ function ItemComponent(props) {
             }
           })
           .map((item) => (
-            <div className="card">
+            <div style={{ backgroundColor: "#6f7db0" }} className="card">
               <Item key={item.key} item={item} onAdd={onAdd}></Item>
             </div>
           ))}

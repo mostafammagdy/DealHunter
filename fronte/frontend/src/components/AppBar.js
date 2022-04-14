@@ -24,8 +24,8 @@ import { Link } from "react-router-dom";
 import ShoppingCart from "../components/ShoppingCart";
 import CartPreview from "./ShoppingCart";
 import AppBarWithoutSearch from "./AppBarWithoutSearch";
-import { LoadingButton } from '@mui/lab';
-import SendIcon from '@mui/icons-material/Send';
+import { LoadingButton } from "@mui/lab";
+import SendIcon from "@mui/icons-material/Send";
 import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
 import {
   CartStateContext,
@@ -34,7 +34,6 @@ import {
 } from "../contexts/cart";
 import Item from "./Item";
 import Fetch from "./Fetch";
-
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -78,12 +77,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function Appbar(props) {
   const [inputText, setInputText] = useState("");
-  const { items, DataisLoaded, brands, filter,path, types } = props;
+  const { items, DataisLoaded, brands, filter, path, types } = props;
   const [cartOpen, setCartOpen] = useState(false);
-  var route ;
+  var route;
   const [cartItems, setCartItems] = useState(() => {
     const stickyicky = localStorage.getItem("cart");
-    
 
     return stickyicky !== null ? JSON.parse(stickyicky) : [];
   });
@@ -162,9 +160,8 @@ function Appbar(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [brandFilter,setBrandFilter] = useState(items)
-  const [typesFilter,setTypesFilter] = useState(items)
-
+  const [brandFilter, setBrandFilter] = useState(items);
+  const [typesFilter, setTypesFilter] = useState(items);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -186,10 +183,6 @@ function Appbar(props) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
- 
-
-
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -276,132 +269,128 @@ function Appbar(props) {
     </Menu>
   );
 
-  const filterBrand = (uniqueBrand) =>{
+  const filterBrand = (uniqueBrand) => {
+    console.log(uniqueBrand);
+    const filteredItems = items.filter(
+      (item) => item.brand == `${uniqueBrand}`
+    );
+    setBrandFilter(filteredItems);
+  };
+  const filterType = (uniqueType) => {
+    console.log(uniqueType);
+    const filteredItems = items.filter((item) => item.type == `${uniqueType}`);
+    setTypesFilter(filteredItems);
+  };
 
-    console.log(uniqueBrand)
-    const filteredItems=items.filter(item => item.brand == `${uniqueBrand}`)
-    setBrandFilter(filteredItems)
-    
-    }
-  const filterType = (uniqueType) =>{
-
-    console.log(uniqueType)
-    const filteredItems=items.filter(item => item.type == `${uniqueType}`)
-    setTypesFilter(filteredItems)
-    
-    }
-
-
-
-
-  if(path == "/" || path == "/items"){
+  if (path == "/" || path == "/items") {
     route = (
       <>
-    <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1>
-    <ItemComponent
-      onAdd={onAdd}
-      inputText={inputText}
-      cartItems={cartItems}
-      items={items}
-    />
+        <h1 style={{ "margin-top": "10px", "margin-bottom": "20px" }}>
+          {" "}
+          Top Products{"\n"}{" "}
+        </h1>
+        <ItemComponent
+          onAdd={onAdd}
+          inputText={inputText}
+          cartItems={cartItems}
+          items={items}
+        />
 
-    {renderMobileMenu}
-    {renderMenu}
-    </>
+        {renderMobileMenu}
+        {renderMenu}
+      </>
     );
-   
-  } else if(path == "/items/brands"){
+  } else if (path == "/items/brands") {
     route = (
-    <>
-   <div style={{"text-align":"center", "margin-top":"5em","padding":"20px"}}>
-    <h1>Browse by Brands</h1>
-  <LoadingButton
-    size="small"
-    onClick= {()=>setBrandFilter(items)}
-    variant="contained"
-    style={{"margin-right":"20px"}}
-  >
-    All
-    </LoadingButton>
-    {brands.map( brand => (
-    <LoadingButton
-    size="small"
-    onClick= {()=>filterBrand(brand)}
-    variant="contained"
-    style={{"margin-right":"20px"}}
-  >
-          {brand}
+      <>
+        <div
+          style={{
+            "text-align": "center",
+            "margin-top": "5em",
+            padding: "20px",
+          }}
+        >
+          <h1>Browse by Brands</h1>
+          <LoadingButton
+            size="small"
+            onClick={() => setBrandFilter(items)}
+            variant="contained"
+            style={{ "margin-right": "20px" }}
+          >
+            All
+          </LoadingButton>
+          {brands.map((brand) => (
+            <LoadingButton
+              size="small"
+              onClick={() => filterBrand(brand)}
+              variant="contained"
+              style={{ "margin-right": "20px" }}
+            >
+              {brand}
+            </LoadingButton>
+          ))}
+        </div>
 
-  </LoadingButton>
-  
-     ))}
-     </div>
+        <ItemComponent
+          onAdd={onAdd}
+          inputText={inputText}
+          cartItems={cartItems}
+          items={brandFilter}
+        />
 
-    <ItemComponent
-      onAdd={onAdd}
-      inputText={inputText}
-      cartItems={cartItems}
-      items={brandFilter}
-    />
-
-    {renderMobileMenu}
-    {renderMenu}
-</>
-);
-  } else if(path == "/items/types"){
+        {renderMobileMenu}
+        {renderMenu}
+      </>
+    );
+  } else if (path == "/items/types") {
     route = (
-    <>
-    <div style={{"text-align":"center", "margin-top":"5em","padding":"20px"}}>
-    <h1>Browse by Types</h1>
-  <LoadingButton
-    size="small"
-    onClick= {()=>setTypesFilter(items)}
-    variant="contained"
-    style={{"margin-right":"20px"}}
-  >
-    All
-    </LoadingButton>
-    {types.map( type => (
-    <LoadingButton
-    size="small"
-    onClick= {()=>filterType(type)}
-    variant="contained"
-    style={{"margin-right":"20px"}}
-  >
-          {type}
+      <>
+        <div
+          style={{
+            "text-align": "center",
+            "margin-top": "5em",
+            padding: "20px",
+          }}
+        >
+          <h1>Browse by Types</h1>
+          <LoadingButton
+            size="small"
+            onClick={() => setTypesFilter(items)}
+            variant="contained"
+            style={{ "margin-right": "20px" }}
+          >
+            All
+          </LoadingButton>
+          {types.map((type) => (
+            <LoadingButton
+              size="small"
+              onClick={() => filterType(type)}
+              variant="contained"
+              style={{ "margin-right": "20px" }}
+            >
+              {type}
+            </LoadingButton>
+          ))}
+        </div>
 
-  </LoadingButton>
-  
-     ))}
+        <ItemComponent
+          onAdd={onAdd}
+          inputText={inputText}
+          cartItems={cartItems}
+          items={typesFilter}
+        />
 
-
-
-
-
-  
-</div>
-
-    <ItemComponent
-      onAdd={onAdd}
-      inputText={inputText}
-      cartItems={cartItems}
-      items={typesFilter}
-    />
-
-    {renderMobileMenu}
-    {renderMenu}
-  </>
-    )
+        {renderMobileMenu}
+        {renderMenu}
+      </>
+    );
   }
-
-
-
 
   return (
     <div>
       <DrawerComponent openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+      <Box style={{ backgroundColor: "#c3d2d6" }} sx={{ flexGrow: 1 }}>
+        <AppBar style={{ backgroundColor: "#662E9B" }} position="static">
           <Toolbar>
             <IconButton
               size="large"
@@ -420,7 +409,6 @@ function Appbar(props) {
               sx={{ display: { xs: "none", sm: "block" } }}
             >
               DealHunter
-              
             </Typography>
             <Search>
               <SearchIconWrapper>
@@ -432,8 +420,6 @@ function Appbar(props) {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-
-            <h1>{inputText}</h1>
 
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -458,15 +444,7 @@ function Appbar(props) {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+
               <IconButton
                 size="large"
                 edge="end"
@@ -493,8 +471,7 @@ function Appbar(props) {
             </Box>
           </Toolbar>
         </AppBar>
-        
-  
+
         {/* <h1 style = {{"margin-top":"10px","margin-bottom":"20px"}}> Top Products{"\n"} </h1>
         <ItemComponent
           onAdd={onAdd}
@@ -509,7 +486,5 @@ function Appbar(props) {
       </Box>
     </div>
   );
-
-
 }
 export default Appbar;
