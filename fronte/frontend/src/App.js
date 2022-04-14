@@ -7,7 +7,7 @@ import DrawerComponent from "./components/Drawer";
 import { useState, useRef, useEffect } from "react";
 import AppBarWithoutSearch from "./components/AppBarWithoutSearch";
 import CheckoutFunction from "./pages/CheckoutFunction";
-
+import Admin from "./pages/Admin";
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
   <Route path = "profile" element = {<><AppBarWithoutSearch/> <MyAccounts/></>}/>
   <Route path = "/items/brands" element = {<><Fetch path = "/items/brands"/></>}/>
   <Route path = "/items/types" element = {<><Fetch path = "/items/types"/></>}/>
+  <Route path = "/administrator" element = {<Admin/>}/>
   
 </Routes>
    
