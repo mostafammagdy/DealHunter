@@ -16,20 +16,6 @@ const products = JSON.parse(localStorage.getItem('cart'))
 
 
 
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA"
-];
-const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" }
-];
-
 
 
 
@@ -53,7 +39,29 @@ function Review(props) {
     totalPrice = totalPrice + (product.quantity*product.price)
     console.log(totalPrice)
     })
+
+    const shippingAddress ={
+      firstname:localStorage.getItem('firstName'),
+      lastname:localStorage.getItem('lastName'),
+      address1:localStorage.getItem('address1'),
+      address2:localStorage.getItem('address2'),
+      city:localStorage.getItem('city'),
+      state:localStorage.getItem('state'),
+      zip:localStorage.getItem('zip'),
+      country:localStorage.getItem('country')
     
+    
+    
+    } 
+
+  
+
+    const payments = [
+      { name: "Card type", detail: "Visa" },
+      { name: "Card holder", detail: localStorage.getItem('cardName') },
+      { name: "Card number", detail: localStorage.getItem('cardNumber') },
+      { name: "Expiry date", detail:localStorage.getItem('cvv') }
+    ];
 
 
 
@@ -87,8 +95,8 @@ function Review(props) {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>{shippingAddress.firstname + " "+ shippingAddress.lastname}</Typography>
+          <Typography gutterBottom>{shippingAddress.address1 + ", "+ shippingAddress.city + ", "+ shippingAddress.country + ", "+ shippingAddress.zip}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
