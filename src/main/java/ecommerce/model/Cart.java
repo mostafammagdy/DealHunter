@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "Cart_Items")
+@Table(name = "cart_items")
 public class Cart implements Serializable {
 
 
