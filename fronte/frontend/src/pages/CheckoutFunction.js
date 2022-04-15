@@ -1,150 +1,148 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { makeStyles } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Paper from "@material-ui/core/Paper";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import ShippingAddress from '../components/ShippingAddress'
-import PaymentForm from "../components/PaymentForm";
-import Review from "../components/ReviewForm";
-import { useState } from "react";
-
-
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: "relative",
-
-  },
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
-      width: 600,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
-  },
-  paper: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
-    padding: theme.spacing.unit * 2,
-    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-      marginTop: theme.spacing.unit * 6,
-      marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3
-    }
-  },
-  stepper: {
-    padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`
-  },
-  buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  button: {
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit
+import {
+  Paper,
+  TextField,
+  Button,
+  IconButton,
+  Box,
+  Grid,
+} from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+class Checkout extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+    this.state = {
+      id: this.props.currentUser.id,
+      shippingAddress: '',
+      shippingCity: '',
+      shippingCountry: '',
+      shippingPostalCode: '',
+      shippingProvince: '',
+    };
+    this.handleButton = this.handleButton.bind(this);
+    this.handleShippingAddress = this.handleShippingAddress.bind(this);
+    this.handleShippingCity = this.handleShippingCity.bind(this);
+    this.handleShippingProvince = this.handleShippingProvince.bind(this);
+    this.handleShippingPostalCode = this.handleShippingPostalCode.bind(this);
+    this.handleShippingCountry = this.handleShippingCountry.bind(this);
   }
-}));
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <ShippingAddress />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
-
-const Checkout =(props)=>{
-
-const classes  = useStyles();
-const [activeStep,setState] = useState(0);
-
- const handleNext = () => {
-    setState(activeStep+1);
+  handleShippingAddress = (e) => {
+    this.setState({ s1: e.target.value });
+  };
+  handleShippingCity = (e) => {
+    this.setState({ s2: e.target.value });
+  };
+  handleShippingProvince = (e) => {
+    this.setState({ s3: e.target.value });
   };
 
- const handleBack = () => {
-    setState(activeStep-1);
+  handleShippingPostalCode = (e) => {
+    this.setState({ s3: e.target.value });
   };
 
-  const handleReset = () => {
-    setState(0);
+  handleShippingCountry = (e) => {
+    this.setState({ s3: e.target.value });
   };
 
-
+  render() {
     return (
-        <div>
-        <CssBaseline />
-        <main className={classes.layout}>
-          <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
-              Checkout
-            </Typography>
-            <Stepper activeStep={activeStep} className={classes.stepper}>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <div>
-              {activeStep === steps.length ? (
-                <div>
-                  <Typography variant="h5" gutterBottom>
-                    Thank you for your order.
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Your order number is #2001539. We have emailed your order
-                    confirmation, and will send you an update when your order
-                    has shipped.
-                  </Typography>
-                  </div>
-              ) : (
-                <div>
-                  {getStepContent(activeStep)}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
-                      <Button
-                        onClick={handleBack}
-                        className={classes.button}
-                      >
-                        Back
-                      </Button>
-                    )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                    </Button>
-                  </div>
-                  </div>
-              )}
+      <div
+        style={{
+          flex: 9.5,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#F8F8F8',
+          height: '100vh',
+        }}
+      >
+        <Paper
+          elevation={5}
+          style={{ alignItems: 'center', width: 600, height: 600 }}
+        >
+          <div className="container">
+            <div className="profile-info">
+              <div className="profile-name"></div>
+              <h3>
+                Welcome to the checkout, {this.props.currentUser.firstName}{' '}
+              </h3>
+              <h5>Shipping Information</h5>
+              <Grid container spacing={24}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="address"
+                    name="address"
+                    label="Address Line"
+                    fullWidth
+                    defaultValue={this.props.currentUser.shippingAddress}
+                    autoComplete="billing address-line1"
+                    value={this.state.shippingAddress}
+                    onChange={this.handleShippingAddress}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="city"
+                    name="city"
+                    label="City"
+                    defaultValue={this.props.currentUser.shippingCity}
+                    fullWidth
+                    autoComplete="billing address-level2"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id="state"
+                    name="state"
+                    label="State/Province/Region"
+                    defaultValue={this.props.currentUser.shippingProvince}
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="zip"
+                    name="zip"
+                    label="Zip / Postal code"
+                    defaultValue={this.props.currentUser.shippingPostalCode}
+                    fullWidth
+                    autoComplete="billing postal-code"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="country"
+                    name="country"
+                    label="Country"
+                    defaultValue={this.props.currentUser.shippingCountry}
+                    fullWidth
+                    autoComplete="billing country"
+                  />
+                </Grid>
+              </Grid>
+
+              <form>
+                <label>
+                  Name:
+                  <input type="text" name="name" label="Name" />
+                </label>
+                <input type="submit" value="Submit" />
+              </form>
             </div>
-          </Paper>
-        </main>
-        </div>
+          </div>
+        </Paper>
+      </div>
     );
   }
-
-
+}
 
 export default Checkout;

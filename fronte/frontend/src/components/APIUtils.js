@@ -1,4 +1,4 @@
-import { API_BASE_URL, ACCESS_TOKEN } from '../index.js';
+import { API_BASE_URL, ACCESS_TOKEN } from './index';
 
 const request = (options) => {
   const headers = new Headers({
@@ -17,7 +17,6 @@ const request = (options) => {
 
   return fetch(options.url, options).then((response) =>
     response.json().then((json) => {
-      console.log(response);
       if (!response.ok) {
         return Promise.reject(json);
       }
@@ -39,7 +38,7 @@ export function getCurrentUser() {
 
 export function login(loginRequest) {
   return request({
-    url: API_BASE_URL + '/auth/login',
+    url: 'http://localhost:8080/auth/login',
     method: 'POST',
     body: JSON.stringify(loginRequest),
   });
