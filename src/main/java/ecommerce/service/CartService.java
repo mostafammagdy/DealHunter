@@ -10,7 +10,7 @@ import ecommerce.model.Item;
 import ecommerce.model.Cart;
 import ecommerce.model.CartItem;
 import ecommerce.repository.ItemRepository;
-import ecommerce.repository.JwtUserRepository;
+import ecommerce.repository.UserRepository;
 import ecommerce.repository.CartItemRepository;
 import ecommerce.repository.CartRepository;
 import ecommerce.util.CartHelper;
@@ -25,7 +25,7 @@ public class CartService {
 	@Autowired
 	private CartItemRepository cart_items;
 	@Autowired
-	private JwtUserRepository users;
+	private UserRepository users;
 	
 	/**
 	 * Get a list of all orders

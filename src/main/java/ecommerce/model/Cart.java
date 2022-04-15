@@ -27,7 +27,7 @@ public class Cart implements Serializable {
 
 	@ManyToOne
 	@JoinColumn
-	private JwtUser user;
+	private User user;
 
 	
 	@NotNull
@@ -40,7 +40,7 @@ public class Cart implements Serializable {
 
 	}
 	
-	public Cart(JwtUser user) {
+	public Cart(User user) {
 		super();
 		this.user = user;
 		this.total_price = 0;
@@ -60,13 +60,13 @@ public class Cart implements Serializable {
 
 
 
-	public JwtUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
 
 
-	public void setUser(JwtUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -90,6 +90,5 @@ public class Cart implements Serializable {
 		this.cartItems = cartItems;
 		
 	}
-
 
 }

@@ -27,7 +27,7 @@ public class Order implements Serializable {
 
 	@ManyToOne
 	@JoinColumn
-	private JwtUser user;
+	private User user;
 
 	@NotNull
 	private String status;
@@ -42,7 +42,7 @@ public class Order implements Serializable {
 
 	}
 	
-	public Order(JwtUser user, String status) {
+	public Order(User user, String status) {
 		super();
 		this.user = user;
 		this.status = status;
@@ -63,13 +63,13 @@ public class Order implements Serializable {
 
 
 
-	public JwtUser getUser() {
+	public User getUser() {
 		return user;
 	}
 
 
 
-	public void setUser(JwtUser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -104,6 +104,4 @@ public class Order implements Serializable {
 		this.orderItems = orderItems;
 		
 	}
-
-
 }
