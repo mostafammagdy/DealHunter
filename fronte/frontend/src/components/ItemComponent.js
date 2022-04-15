@@ -1,43 +1,18 @@
 import React, { useReducer, useState } from "react";
 import Appbar from "./AppBar";
+import { Card, Footer, Header } from "./FooterStyles";
+import CartPreview from "./ShoppingCart";
 
-class ItemComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      searchedItems: [],
-      DataisLoaded: false,
-    };
-  }
+import Item from "./Item";
+import ShoppingCart from "./ShoppingCart";
 
-  componentDidMount() {
-    console.log("component did mount");
-    fetch("/items", {
-      crossDomain: true,
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        const info = this.state.items;
-        if (info !== undefined) {
-          this.setState({ items: json, DataisLoaded: true });
-        }
-      });
-  }
+function ItemComponent(props) {
+  const { cartItems, onAdd, inputText, DataisLoaded, items } = props;
 
-  render(props) {
-    const { DataisLoaded, items } = this.state;
+  const [searchedItems, setSearchedItems] = useState([]);
 
-    if (!DataisLoaded)
-      return (
-        <div>
-          <h1>Please ewait...</h1>
-        </div>
-      );
-
-    return (
+  return (
+    <div>
       <div className="item-container">
         <div
           style={{
@@ -53,32 +28,21 @@ class ItemComponent extends React.Component {
         </div>
         {items
           .filter((val) => {
-            if (this.props.inputText == "") {
+            if (inputText == "") {
               return val;
-            } else if (
-              val.name
-                .toLowerCase()
-                .includes(this.props.inputText)
-            ) {
+            } else if (val.name.toLowerCase().includes(inputText)) {
               return val;
             }
           })
           .map((item) => (
             <div className="card">
-              <img
-                src={item.image}
-                alt=""
-              />
-              <h3>{item.brand}</h3>
-              <p>{item.description}</p>
-              <h3>{item.name}</h3>$$:{item.price}, Item_Quantity:{" "}
-              {item.quantity}
-              <h3>{item.type}</h3>
+              <Item key={item.key} item={item} onAdd={onAdd}></Item>
             </div>
           ))}
       </div>
-    );
-  }
+      );
+    </div>
+  );
 }
 
 export default ItemComponent;

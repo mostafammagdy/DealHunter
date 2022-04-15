@@ -1,31 +1,34 @@
-import * as React from 'react';
-import { useState } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 import ItemComponent from "./ItemComponent";
 
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import DrawerComponent from './Drawer';
-import {Link} from "react-router-dom";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DrawerComponent from "./Drawer";
+import Drawer from "@mui/material/Drawer";
+import { Link } from "react-router-dom";
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+import ShoppingCart from "../components/ShoppingCart";
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginRight: theme.spacing(2),
@@ -61,20 +64,90 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
- function Appbar() {
+function Appbar(props) {
   const [inputText, setInputText] = useState("");
+  const { items, DataisLoaded } = props;
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const [cartItems, setCartItems] = useState(() => {
+    const stickyicky = localStorage.getItem("cart");
+
+    return stickyicky !== null ? JSON.parse(stickyicky) : [];
+  });
+
+  useEffect(() => {
+    //turn into js
+    //will add a fetch for the cart items based on id
+
+    //console.log("Localstorage:", JSON.parse(localStorage.getItem("cart")));
+    //let ls = JSON.parse(localStorage.getItem("cart"));
+    //load the persisted cart if it exists
+    // if (ls) setCartItems(ls);
+    // localStorage.setItem('cart',JSON.stringify(cartItems))
+    let thiscart = JSON.stringify(cartItems);
+    localStorage.setItem("cart", thiscart);
+  }, [cartItems]);
+
+  const getTotalItems = (items: []) =>
+    items.reduce((acc, item) => acc + item.quantity, 0);
 
   let inputHandler = (e) => {
     //convert input text to lower case
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
+  const onAdd = async (product) => {
+    const isItemInCart = cartItems.find((item) => item.id === product.id);
+    console.log("adding");
+    if (isItemInCart) {
+      console.log("adding +1");
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id
+            ? { ...isItemInCart, quantity: isItemInCart.quantity + 1 }
+            : x
+        )
+      );
+    } else {
+      console.log("adding new");
+      console.log("cartItems.quantity");
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
+    console.log("adding to local storage");
+    console.log(cartItems);
+    //const stringCart = JSON.stringify(cartItems);
+    //localStorage.setItem("cart", stringCart);
+    //console.log("addED to local storage");
+    //await timeout(5000);
+    //console.log("Localstorage:", JSON.parse(localStorage.getItem("cart")));
+  };
+
+  const onRemove = (product) => {
+    const isItemInCart = cartItems.find((item) => item.id === product.id);
+    console.log({ isItemInCart });
+    if (isItemInCart.quantity === 1) {
+      console.log("there was only one item its removed now");
+      setCartItems(cartItems.filter((x) => x.id !== product.id));
+    } else {
+      console.log("there's more than one, its being removed rn");
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id
+            ? { ...isItemInCart, quantity: isItemInCart.quantity - 1 }
+            : x
+        )
+      );
+    }
+    //const stringCart = JSON.stringify(cartItems);
+    //localStorage.setItem("cart", stringCart);
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [openDrawer,setOpenDrawer] = React.useState(false);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -89,56 +162,60 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     handleMobileMenuClose();
   };
 
-  const handleMenuClick = (pageURL) =>{
+  const handleMenuClick = (pageURL) => {
     setAnchorEl(null);
-    
-
-
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-
-
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
-      onClose={() =>handleMenuClick()}
+      onClose={() => handleMenuClick()}
     >
-      
-      <MenuItem onClick={()=>handleMenuClose()}><Link style ={{textDecoration:"none",color:"black"}} to="/profile">Profile</Link></MenuItem>
-      <MenuItem onClick={()=>handleMenuClose()}><Link style ={{textDecoration:"none",color:"black"}} to="/myAccount">My Account</Link></MenuItem>
-      
+      <MenuItem onClick={() => handleMenuClose()}>
+        <Link style={{ textDecoration: "none", color: "black" }} to="/profile">
+          Profile
+        </Link>
+      </MenuItem>
+      <MenuItem onClick={() => handleMenuClose()}>
+        <Link
+          style={{ textDecoration: "none", color: "black" }}
+          to="/myAccount"
+        >
+          My Account
+        </Link>
+      </MenuItem>
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
@@ -180,96 +257,112 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
   return (
     <div>
-    <DrawerComponent openDrawer = {openDrawer} setOpenDrawer = {setOpenDrawer}/>
-    
-
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() => setOpenDrawer(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            DealHunter
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              onChange={inputHandler}
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <h1>{inputText}</h1>
-
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+      <DrawerComponent openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
             <IconButton
               size="large"
-              aria-label="show 4 new mails"
+              edge="start"
               color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={() => setOpenDrawer(true)}
             >
-              <Badge badgeContent={4} color="error">
-              <ShoppingCartIcon />
-              </Badge>
+              <MenuIcon />
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <ItemComponent inputText={inputText} />
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
+              DealHunter
+              <div>Hello, {cartItems.length}!</div>
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                onChange={inputHandler}
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
 
+            <h1>{inputText}</h1>
 
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Drawer
+                anchor="right"
+                open={cartOpen}
+                onClose={() => setCartOpen(false)}
+              >
+                <ShoppingCart
+                  cartItems={cartItems}
+                  onAdd={onAdd}
+                  onRemove={onRemove}
+                />
+              </Drawer>
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+                onClick={() => setCartOpen(true)}
+              >
+                <Badge badgeContent={getTotalItems(cartItems)} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+
+        <ItemComponent
+          onAdd={onAdd}
+          inputText={inputText}
+          cartItems={cartItems}
+          items={items}
+        />
+
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
     </div>
   );
-  
 }
 export default Appbar;
