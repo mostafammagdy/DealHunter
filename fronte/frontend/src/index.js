@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
 
+export const API_BASE_URL = 'http://localhost:8080';
+export const ACCESS_TOKEN = 'accessToken';
 
 ReactDOM.render(
   <React.StrictMode>
-    
-<BrowserRouter>
-<App />
-</BrowserRouter>
-    </React.StrictMode>,
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
