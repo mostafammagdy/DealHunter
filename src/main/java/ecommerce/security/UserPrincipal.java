@@ -1,6 +1,6 @@
 package ecommerce.security;
 
-import  ecommerce.model.User;
+import ecommerce.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +18,9 @@ public class UserPrincipal implements  UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
 
+    public UserPrincipal() {
+        super();
+    }
     public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
@@ -46,7 +49,7 @@ public class UserPrincipal implements  UserDetails {
     public Long getId() {
         return id;
     }
-
+    
     public String getEmail() {
         return email;
     }
@@ -86,13 +89,13 @@ public class UserPrincipal implements  UserDetails {
         return authorities;
     }
 
-   
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
     public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
-    }
-
-	
-
- 
+    } 
+    
 }
+
