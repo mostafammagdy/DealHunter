@@ -36,23 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new TokenAuthenticationFilter();
     }
 
-    /*
-      By default, Spring OAuth2 uses HttpSessionOAuth2AuthorizationRequestRepository to save
-      the authorization request. But, since our service is stateless, we can't save it in
-      the session. We'll save the request in a Base64 encoded cookie instead.
-    */
-   
-
-
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder, HttpSecurity security) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder());
-        security.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**").permitAll();
     }
- 
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
