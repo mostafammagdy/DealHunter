@@ -45,6 +45,12 @@ public class OrderService {
 	}
 	
 
+	/**
+	 * create a order and attempts to checkout
+	 * @param user
+	 * @param orderItems
+	 * @return
+	 */
 	public String createAndCheckout(String user, List<OrderHelper> orderItems) {
 		
 		Order order = new Order(users.findByEmail(user), "started");
