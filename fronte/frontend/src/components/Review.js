@@ -16,15 +16,11 @@ import { RatingContext } from '../contexts/rating';
 export default function Review({id}) {
 
   const labels  = {
-    0.5: 'Useless',
+    
     1: 'Useless+',
-    1.5: 'Poor',
-    2: 'Poor+',
-    2.5: 'Ok',
+    2: 'Poor+', 
     3: 'Ok+',
-    3.5: 'Good',
     4: 'Good+',
-    4.5: 'Excellent',
     5: 'Excellent+',
   };
 
@@ -49,29 +45,32 @@ export default function Review({id}) {
     
   };
 
+ 
 
 
-  const postReview = () =>{
-    fetch(`/reviews/item/${id}`,{
-      method:'POST',
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(data)
 
-    }).then(res=>res.json()).then((json)=>{
-      console.log(json)
-     setTextReview('')
-     setValue(1)
-      setOpen(false)
-    })
-    
+   const postReview=async()=>{
+const postResponse = await  fetch(`/reviews/item/${id}`,{
+  method:'POST',
+  headers: {
+    'Content-Type': 'application/json'
+    // 'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: JSON.stringify(data)
+
+})
+   const json = await postResponse.json();
+   console.log(json)
+
+
     fetch(`/reviews/item/${id}`)
     .then(res=>res.json())
     .then(json=>{
     setRatings(json)
-     console.log("bro")
+    setTextReview('')
+    setValue(1)
+     setOpen(false)
+   
     
     })
 
@@ -108,7 +107,7 @@ export default function Review({id}) {
       <Rating
         name="hover-feedback"
         value={value}
-        precision={0.5}
+        precision={1}
         getLabelText={getLabelText}
         onChange={(event, newValue) => {
           setValue(newValue);
