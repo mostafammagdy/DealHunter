@@ -20,6 +20,8 @@ import RatingView from "./Rating.js"
 import { RatingContext } from "../contexts/rating";
 import { useState } from "react";
 
+import Rate from './Rate.js'
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -82,6 +84,13 @@ export default function Item(props) {
         <CardContent>
           <Typography paragraph>Description:</Typography>
           <Typography paragraph>{item.description}</Typography>
+         {ratings.map(rating=>(
+           <>
+        <Rate value = {rating.rating}/>
+          <Typography paragraph>{rating.text}</Typography>
+
+          </>
+         ))}
         </CardContent>
       </Collapse>
     </Card>

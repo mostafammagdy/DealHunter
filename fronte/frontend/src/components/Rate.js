@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import { useState,useEffect,useContext } from 'react';
 import { ColorLens } from '@mui/icons-material';
-import { RatingContext } from '../contexts/rating';
+
 
 const labels  = {
   0.5: 'Useless',
@@ -23,36 +23,10 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function RatingView({id}) {
-  const [value, setValue] = useState(1);
-  const {ratings,setRatings} = useContext(RatingContext)
-
-  let ratingsVar = []
-let x = 0;
-
-useEffect(()=>{
-fetch(`/reviews/item/${id}`)
-.then(res=>res.json())
-.then(json=>{
-setRatings(json)
+export default function Rate({value}) {
+ // const [value, setValue] = useState(1);
 
 
-})
-
-
-},[id])
-
-
-useEffect(()=>{
-  let sum = 0;
-for(let i = 0;i<ratings.length;i++){
-
-  sum = sum + ratings[i].rating;
-
-}
-setValue(Math.round(sum/ratings.length));
-
-},[ratings])
 
   return (
     <Box
