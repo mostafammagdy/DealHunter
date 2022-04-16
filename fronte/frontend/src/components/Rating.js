@@ -2,7 +2,9 @@ import * as React from 'react';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
-import { useState } from 'react';
+import { useState,useEffect,useContext } from 'react';
+import { ColorLens } from '@mui/icons-material';
+import { RatingContext } from '../contexts/rating';
 
 const labels  = {
   0.5: 'Useless',
@@ -21,10 +23,37 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function HoverRating() {
+export default function RatingView({id}) {
   const [value, setValue] = useState(1);
-  const [hover, setHover] = useState(-1);
+  const {ratings,setRatings} = useContext(RatingContext)
 
+  let ratingsVar = []
+let x = 0;
+
+useEffect(()=>{
+fetch(`/reviews/item/${id}`)
+.then(res=>res.json())
+.then(json=>{
+setRatings(json)
+ console.log("bro")
+
+})
+
+
+},[id])
+
+
+useEffect(()=>{
+  let sum = 0;
+for(let i = 0;i<ratings.length;i++){
+
+  sum = sum + ratings[i].rating;
+console.log(sum)
+}
+setValue(Math.round(sum/ratings.length));
+
+},[ratings])
+console.log(ratings)
   return (
     <Box
       sx={{
@@ -32,24 +61,18 @@ export default function HoverRating() {
         display: 'flex',
         alignItems: 'center',
         marginLeft: '70px',
+        marginBottom:'20px'
       }}
     >
       <Rating
-        name="hover-feedback"
+        name="read-only"
         value={value}
         precision={0.5}
         getLabelText={getLabelText}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        onChangeActive={(event, newHover) => {
-          setHover(newHover);
-        }}
+        readOnly
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
       />
-      {value !== null && (
-        <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-      )}
+
     </Box>
   );
 }
