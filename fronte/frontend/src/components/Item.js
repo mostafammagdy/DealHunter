@@ -41,8 +41,8 @@ export default function Item(props) {
       <CardHeader title={item.name} subheader={item.brand} />
       <CardMedia
         component="img"
-        height="194"
-        image="https://m.media-amazon.com/images/I/21DejQuoT2L.jpg"
+        height="345"
+        image={item.image}
         alt=""
       />
       <CardContent>
