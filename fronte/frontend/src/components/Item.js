@@ -16,6 +16,9 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import HoverRating from "./Rating";
 import Review from "./Review";
+import RatingView from "./Rating.js"
+import { RatingContext } from "../contexts/rating";
+import { useState } from "react";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -32,9 +35,12 @@ export default function Item(props) {
   const [expanded, setExpanded] = React.useState(false);
   const { item, onAdd } = props;
 
+  const [ratings,setRatings] = useState([])
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -66,10 +72,12 @@ export default function Item(props) {
       <IconButton size="large" onClick={() => onAdd(item)}>
         Add to Cart
       </IconButton>
-      
-   
-      <Review/>
-      
+
+      <RatingContext.Provider value = {{ratings,setRatings}}>
+   <RatingView id = {item.id}/>
+      <Review id = {item.id}/>
+      </RatingContext.Provider>
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Description:</Typography>
