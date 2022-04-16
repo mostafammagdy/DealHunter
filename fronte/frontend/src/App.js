@@ -1,21 +1,19 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Fetch from "./components/Fetch";
 import { Routes, Route } from "react-router-dom";
 import MyAccounts from "./pages/MyAccount";
-import DrawerComponent from "./components/Drawer";
-import { useState, useRef, useEffect } from "react";
+// import { useState, useRef, useEffect } from "react";
 import AppBarWithoutSearch from "./components/AppBarWithoutSearch";
 import CheckoutFunction from "./pages/CheckoutFunction";
 import Admin from "./pages/Admin";
 
 
 function App() {
-  const [expanded, setExpanded] = useState(false);
-  const [accodionHeight, setAccodionHeight] = useState(0);
-  const ref = useRef(null);
+  // const [expanded, setExpanded] = useState(false);
+  // const [accodionHeight, setAccodionHeight] = useState(0);
+  // const ref = useRef(null);
 
-  const open = () => setExpanded(!expanded);
+  // const open = () => setExpanded(!expanded);
 
   return (
     <div className="App">
