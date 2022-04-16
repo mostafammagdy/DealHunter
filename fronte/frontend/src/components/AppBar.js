@@ -306,7 +306,7 @@ function Appbar(props) {
         <div
           style={{
             "text-align": "center",
-            "margin-top": "5em",
+            // "margin-top": "5em",
             padding: "20px",
           }}
         >
@@ -348,7 +348,7 @@ function Appbar(props) {
         <div
           style={{
             "text-align": "center",
-            "margin-top": "5em",
+            // "margin-top": "5em",
             padding: "20px",
           }}
         >
@@ -405,7 +405,9 @@ function Appbar(props) {
             <Typography
               variant="h6"
               noWrap
-              component="div"
+              component={Link}
+              to="/"
+              style={{ textDecoration: 'none', color: 'inherit'  }}
               sx={{ display: { xs: "none", sm: "block" } }}
             >
               DealHunter

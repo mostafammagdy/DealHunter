@@ -1,17 +1,11 @@
 import * as React from "react";
-import { Button } from "@material-ui/core";
-import { CartItemType } from "../App";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import HoverRating from "./Rating";
@@ -38,7 +32,7 @@ export default function Item(props) {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader title={item.name} subheader={item.brand} />
+      <CardHeader title={item.type} subheader={item.brand} />
       <CardMedia
         component="img"
         height="345"
@@ -47,12 +41,10 @@ export default function Item(props) {
       />
       <CardContent>
         <Typography key={item.key} variant="body2" color="text.secondary">
-          <h3>{item.brand}</h3>
-          <h3>{item.name}</h3>$:{item.price}, Item_Quantity: {item.quantity}
-          <h3>{item.type}</h3>
+          <h2>{item.name}</h2>
+          <h3>${item.price}</h3>
+          <h4>Quantity:{item.quantity}</h4>
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -61,7 +53,7 @@ export default function Item(props) {
         >
           <ExpandMoreIcon />
         </ExpandMore>
-      </CardActions>
+      </CardContent>
 
       <IconButton size="large" onClick={() => onAdd(item)}>
         Add to Cart
