@@ -35,7 +35,7 @@ export default function Rate({value}) {
         display: 'flex',
         alignItems: 'center',
         marginLeft: '70px',
-        marginBottom:'20px'
+        marginBottom:'5px'
       }}
     >
       <Rating

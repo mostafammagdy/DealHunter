@@ -87,7 +87,7 @@ const postResponse = await  fetch(`/reviews/item/${id}`,{
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen} style={{"margin-bottom":"20px"}}>
+      <Button variant="outlined" onClick={handleClickOpen} style={{"margin-bottom":"0px"}}>
         Submit a Review
       </Button>
       <Dialog open={open} onClose={handleClose}>

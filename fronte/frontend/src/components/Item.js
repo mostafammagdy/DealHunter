@@ -15,6 +15,7 @@ import { RatingContext } from "../contexts/rating";
 import { useState } from "react";
 
 import Rate from './Rate.js'
+import { border } from "@mui/system";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -45,7 +46,7 @@ export default function Item(props) {
         component="img"
         height="345"
         image={item.image}
-        alt=""
+        alt={item.name}
       />
       <CardContent>
         <Typography key={item.key} variant="body2" color="text.secondary">
@@ -53,7 +54,18 @@ export default function Item(props) {
           <h3>${item.price}</h3>
           <h4>Quantity:{item.quantity}</h4>
         </Typography>
-        <ExpandMore
+      </CardContent>
+      <IconButton size="large" onClick={() => onAdd(item)} style={{
+        color: "rgba(10, 0, 0, .85)",
+        backgroundColor: "gold",
+        borderRadius :"15px",
+        marginBottom :"10px"}}>
+        Add to Cart
+      </IconButton>
+      <RatingContext.Provider value = {{ratings,setRatings}}>
+      <RatingView id = {item.id}/>
+      <Review id = {item.id}/>
+      <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -61,26 +73,17 @@ export default function Item(props) {
         >
           <ExpandMoreIcon />
         </ExpandMore>
-      </CardContent>
-
-      <IconButton size="large" onClick={() => onAdd(item)}>
-        Add to Cart
-      </IconButton>
-
-      <RatingContext.Provider value = {{ratings,setRatings}}>
-   <RatingView id = {item.id}/>
-      <Review id = {item.id}/>
       </RatingContext.Provider>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Description:</Typography>
           <Typography paragraph>{item.description}</Typography>
+          <Typography paragraph>Reviews:</Typography>
          {ratings.map(rating=>(
            <>
         <Rate value = {rating.rating}/>
           <Typography paragraph>{rating.text}</Typography>
-
           </>
          ))}
         </CardContent>
