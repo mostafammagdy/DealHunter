@@ -15,7 +15,6 @@ import { RatingContext } from "../contexts/rating";
 import { useState } from "react";
 
 import Rate from './Rate.js'
-import { border } from "@mui/system";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
