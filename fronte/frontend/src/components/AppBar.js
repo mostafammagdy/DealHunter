@@ -22,18 +22,8 @@ import Drawer from "@mui/material/Drawer";
 import { Link } from "react-router-dom";
 
 import ShoppingCart from "../components/ShoppingCart";
-import CartPreview from "./ShoppingCart";
-import AppBarWithoutSearch from "./AppBarWithoutSearch";
 import { LoadingButton } from "@mui/lab";
-import SendIcon from "@mui/icons-material/Send";
-import { CommonDispatchContext, setSearchKeyword } from "../contexts/common";
-import {
-  CartStateContext,
-  CartDispatchContext,
-  toggleCartPopup,
-} from "../contexts/cart";
-import Item from "./Item";
-import Fetch from "./Fetch";
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

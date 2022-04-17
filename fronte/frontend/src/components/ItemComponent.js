@@ -1,10 +1,5 @@
 import React, { useReducer, useState } from "react";
-import Appbar from "./AppBar";
-import { Card, Footer, Header } from "./FooterStyles";
-import CartPreview from "./ShoppingCart";
-
 import Item from "./Item";
-import ShoppingCart from "./ShoppingCart";
 
 function ItemComponent(props) {
   const { cartItems, onAdd, inputText, DataisLoaded, items } = props;
