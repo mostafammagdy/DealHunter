@@ -10,6 +10,7 @@ import ecommerce.model.Item;
 import ecommerce.model.Order;
 import ecommerce.model.OrderItem;
 import ecommerce.repository.ItemRepository;
+import ecommerce.repository.JwtUserRepository;
 import ecommerce.repository.OrderItemRepository;
 import ecommerce.repository.OrderRepository;
 import ecommerce.repository.UserRepository;
@@ -25,7 +26,7 @@ public class OrderService {
 	@Autowired
 	private OrderItemRepository order_items;
 	@Autowired
-	private UserRepository users;
+	private JwtUserRepository users;
 	
 	/**
 	 * Get a list of all orders
