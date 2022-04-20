@@ -1,80 +1,80 @@
 
 GET all items
-curl -L -X GET "http://localhost:8080/items" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items" -H "Content-Type: application/json" 
 
 GET all item brands
-curl -L -X GET "http://localhost:8080/items/brands" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items/brands" -H "Content-Type: application/json" 
 
 GET all item types
-curl -L -X GET "http://localhost:8080/items/types" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items/types" -H "Content-Type: application/json" 
 
 GET all items with brand=Apple
-curl -L -X GET "http://localhost:8080/items?brand=Apple" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?brand=Apple" -H "Content-Type: application/json" 
 
 GET all items with type=Fruits
-curl -L -X GET "http://localhost:8080/items?type=Fruits" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?type=Fruits" -H "Content-Type: application/json" 
 
 GET all items with "phone" in name or desc
-curl -L -X GET "http://localhost:8080/items?query=phone" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?query=phone" -H "Content-Type: application/json" 
 
 GET all items with brand=Apple, type=iPad, and with "new" in its name or description
-curl -L -X GET "http://localhost:8080/items?brand=Apple&type=iPad&query=new" -H "Content-Type: application/json" 
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?brand=Apple&type=iPad&query=new" -H "Content-Type: application/json" 
 
 POST new item
-curl -L -X POST "http://localhost:8080/items" -H "Content-Type: application/json" --data-raw "{\"id\":8195, \"name\":\"Ipad4\", \"description\": \"a medium-big tablet\",\"type\":\"iPad\", \"brand\":\"Apple\",\"price\": 800,\"quantity\": 30,\"image\": \"https://m.media-amazon.com/images/I/61Tt3fiFVAS._AC_UL320_.jpg\"}"
+curl -L -X POST "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items" -H "Content-Type: application/json" --data-raw "{\"id\":8195, \"name\":\"Ipad4\", \"description\": \"a medium-big tablet\",\"type\":\"iPad\", \"brand\":\"Apple\",\"price\": 800,\"quantity\": 30,\"image\": \"https://m.media-amazon.com/images/I/61Tt3fiFVAS._AC_UL320_.jpg\"}"
 
 PUT new changes to item
-curl -L -X PUT "http://localhost:8080/items/8195" -H "Content-Type: application/json" --data-raw "{\"id\": 3,\"name\": \"browser\",\"description\": \"disc3\"}"
+curl -L -X PUT "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items/8195" -H "Content-Type: application/json" --data-raw "{\"id\": 3,\"name\": \"browser\",\"description\": \"disc3\"}"
 
 DELETE item
-curl -L -X DELETE "http://localhost:8080/items/8195" -H "Content-Type: application/json" 
+curl -L -X DELETE "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items/8195" -H "Content-Type: application/json" 
 
 testcases for SQL injection
-curl -L -X GET "http://localhost:8080/items?brand=Apple'+or+'1'+=+'1" -H "Content-Type: application/json"
-curl -L -X GET "http://localhost:8080/items?type=iPad'+or+'1'='1" -H "Content-Type: application/json"
-curl -L -X GET "http://localhost:8080/items?query=new'+or+'1'='1" -H "Content-Type: application/json"
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?brand=Apple'+or+'1'+=+'1" -H "Content-Type: application/json"
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?type=iPad'+or+'1'='1" -H "Content-Type: application/json"
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/items?query=new'+or+'1'='1" -H "Content-Type: application/json"
 
 GET all orders
-curl -L -X GET "http://localhost:8080/orders" -H "Content-Type: application/json"
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/orders" -H "Content-Type: application/json"
 
 GET all orders from user with id2
-curl -L -X GET "http://localhost:8080/orders/user/2" -H "Content-Type: application/json" --data-raw ""
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/orders/user/2" -H "Content-Type: application/json" --data-raw ""
 
 POST create a order for username/email fakee@gmail with 2 itemid 1 and 2 itemid 2, attempt to checkout 
-curl -L -X POST "http://localhost:8080/orders/process/fakee@gmail.com" -H "Content-Type: application/json" --data-raw "[{\"item\":1,\"quantity\":1},{\"item\":2,\"quantity\":2}]"
+curl -L -X POST "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/orders/process/fakee@gmail.com" -H "Content-Type: application/json" --data-raw "[{\"item\":1,\"quantity\":1},{\"item\":2,\"quantity\":2}]"
 
 GET all reviews
-curl -L -X GET "http://localhost:8080/reviews"
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/reviews"
 
 GET reviews for item 1
-curl -L -X GET "http://localhost:8080/reviews/item/20"
+curl -L -X GET "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/reviews/item/20"
 
 POST new review with text "Bad phone" and rating 1 to item 2
-curl -L -X POST "http://localhost:8080/reviews/item/2" -H "Content-Type: application/json" --data-raw "{\"text\":\"Bad phone\",\"rating\":1}"
+curl -L -X POST "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/reviews/item/2" -H "Content-Type: application/json" --data-raw "{\"text\":\"Bad phone\",\"rating\":1}"
 
 PUT update review with id 1
-curl -L -X PUT "http://localhost:8080/reviews/1" -H "Content-Type: application/json" --data-raw "{\"text\":\"worth $1001\",\"rating\":5}"
+curl -L -X PUT "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/reviews/1" -H "Content-Type: application/json" --data-raw "{\"text\":\"worth $1001\",\"rating\":5}"
 
 DELETE review with id 1
-curl -L -X DELETE "http://localhost:8080/reviews/1" -H "Content-Type: application/json"
+curl -L -X DELETE "http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/reviews/1" -H "Content-Type: application/json"
 
 
 
 1) User Login 
-curl -H "Content-Type: application/json" -X POST -d '{"email": "test@gmail.com","password":"test"}'  http://localhost:8080/auth/login
+curl -H "Content-Type: application/json" -X POST -d '{"email": "test@gmail.com","password":"test"}'  http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/auth/login
 
 2) User Sign Up  
-curl -H "Content-Type: application/json" -X POST -d '{"email": "test@gmail.com","password": "test","firstName": "John","lastName": "Smith","displayName": "tooCool4U"}'  http://localhost:8080/auth/signup
+curl -H "Content-Type: application/json" -X POST -d '{"email": "test@gmail.com","password": "test","firstName": "John","lastName": "Smith","displayName": "tooCool4U"}'  http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/auth/signup
 
 
 3) User Updating/Adding Billing Info [ Must be signed with jwt token in header] 
-curl -X POST http://localhost:8080/user/billingUpdate-H 'Authorization: Bearer {token}'-d '{  "id":1,"billingAddress":"3111 Streamwood","billingCountry":"CA","billingProvince":"ON","billingCity": "Hamilton","billingPostalCode":"LS878H" }'
+curl -X POST http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/user/billingUpdate-H 'Authorization: Bearer {token}'-d '{  "id":1,"billingAddress":"3111 Streamwood","billingCountry":"CA","billingProvince":"ON","billingCity": "Hamilton","billingPostalCode":"LS878H" }'
 
 Here is an example with token included 
-curl -X POST http://localhost:8080/user/billingUpdate-H 'Authorization: Bearer {eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjUwMDE1OTA5LCJleHAiOjE2NTA4Nzk5MDl9.MbqED8zV7V5nk6mv6tdrtKWQZ0a3HNh-VdxeLFeJVcI1SRFClpH3GjGyCnAk-Eq2MDZ4wxJHn2NWUqGmC33qUw}'-d '{  "id":1,"billingAddress":"3111 Streamwood","billingCountry":"CA","billingProvince":"ON","billingCity": "Hamilton","billingPostalCode":"LS878H" }'
+curl -X POST http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/user/billingUpdate-H 'Authorization: Bearer {eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjUwMDE1OTA5LCJleHAiOjE2NTA4Nzk5MDl9.MbqED8zV7V5nk6mv6tdrtKWQZ0a3HNh-VdxeLFeJVcI1SRFClpH3GjGyCnAk-Eq2MDZ4wxJHn2NWUqGmC33qUw}'-d '{  "id":1,"billingAddress":"3111 Streamwood","billingCountry":"CA","billingProvince":"ON","billingCity": "Hamilton","billingPostalCode":"LS878H" }'
 
 4) User Updating/Deleting Shipping Info [ Must be signed with jwt token in header] 
-curl -X POST http://localhost:8080/user/shippingUpdate-H 'Authorization: Bearer {token}'-d '{  "id":1, "shippingAddress":"3111 Streamwood", "shippingCountry":"CA","shippingProvince":"ON",  "shippingCity": "More", "shippingPostalCode":"LS878H" }'
+curl -X POST http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/user/shippingUpdate-H 'Authorization: Bearer {token}'-d '{  "id":1, "shippingAddress":"3111 Streamwood", "shippingCountry":"CA","shippingProvince":"ON",  "shippingCity": "More", "shippingPostalCode":"LS878H" }'
 
 5) Get Current User 
-curl -X GET http://localhost:8080/user/me -H 'Authorization: Bearer {token}'
+curl -X GET http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/user/me -H 'Authorization: Bearer {token}'

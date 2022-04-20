@@ -4,14 +4,16 @@ This application is deployed to an AWS Elastic Beanstalk instance.
 An running instance can be accessed at http://dealhunter-env.eba-htprj3h6.us-east-1.elasticbeanstalk.com/   
 It should run 24/7 without requiring the student to restart the AWS academy session
 
-It can also be run by importing this project as a maven project in eclipse, then running Maven Build with the goal 
-
-    package -Dactive.profile=prod
-
-Once it is finished building, open a terminal in DealHunter/target and run the command: 
+It can also be run by opening  a terminal in /target and running the command: 
 
     java -jar ecommerce-0.0.1-SNAPSHOT.jar
 Then you can navigate to http://localhost:5000/ on a browser with JavaScript enabled. 
+
+If there is a problem with the existing jar, you can try importing this project as a maven project in eclipse, then running Maven Build with the goal 
+
+    package -Dactive.profile=prod
+
+To rebuild the jar.
 
 
 
